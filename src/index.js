@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Navbar from './components/Navbar';
 
 ReactDOM.render(
-  <h1>Start Here</h1>,
+  <>
+  <Navbar></Navbar>
+  </>,
   document.getElementById('root')
 );

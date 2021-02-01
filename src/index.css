@@ -1,1 +1,50 @@
 
+.navbar{
+    width: 100%;
+    background-color:#264d73;
+    color: white;
+    padding-top: 2px;
+    padding-left:5px;
+}
+
+.buttons{
+    font-size: 15px;
+    padding:10px;
+    /* padding-right: 10px;
+    padding-top:5px;
+    padding-bottom: 5px; */
+    margin-left:10px;
+    margin-right: 10px;
+    color:white;
+    background-color:lightseagreen;
+    border-radius:5px;
+    border:none;
+}
+
+.buttons:hover{
+    color:white;
+}
+
+.heading{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.heading:hover{
+    color: lightseagreen;
+   }
+
+.Dropdown
+{
+    background-color: #264d73;
+    color: white;
+    font-weight: bold;
+    padding:20px;
+    border:none;
+}
+
+.Dropdown:hover{
+    color: lightseagreen;   
+}
+
