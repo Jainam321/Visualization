@@ -3,6 +3,7 @@ import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
 import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
+import Astar from "../algorithms/Astar";
 import "./index.css";
 import Button from "./Button"; 
 import Heading from "./Heading";
@@ -33,8 +34,8 @@ function Matrix() {
             <ul>
                 <Dropdown name="Algorithm"></Dropdown>
                 <Dropdown name="Maze and pattern"></Dropdown>
-                
-                <button onClick={()=>visualizeDijkstra(grid1)}>Start</button>
+                <button onClick={()=>visualizeAstar(grid1)}>Start</button>
+                {/* <button onClick={()=>visualizeDijkstra(grid1)}>Start</button> */}
                 <Button title="Stop!"></Button>
             </ul>
         </div>
@@ -114,3 +115,14 @@ function visualizeDijkstra(grid1) {
   const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
   animateDijkstra(visitedNodes, nodesInShortestPathOrder);
 }
+
+
+function visualizeAstar(grid1) {
+  console.log("run");
+  const startNode = grid1[6][10];
+  const finishNode = grid1[7][13];
+  const visitedNodes  = Astar(grid1, startNode, finishNode);
+  // const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
+  // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
+}
+
