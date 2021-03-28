@@ -2,7 +2,7 @@ import React, { useEffect ,useState} from "react";
 import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
-import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
+// import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
 import Astar from "../algorithms/Astar";
 import BFS from "../algorithms/BFS";
 import DFS from "../algorithms/DFS";
