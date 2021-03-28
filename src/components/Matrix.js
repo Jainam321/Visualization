@@ -9,7 +9,7 @@ import DFS from "../algorithms/DFS";
 import "./index.css";
 import Button from "./Button"; 
 import Heading from "./Heading";
-import Dropdown from "./Dropdown"
+import Dropdown from "./Dropdown";
 
 function getInitialGrid () {
   const grid=[];
