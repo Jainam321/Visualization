@@ -3,7 +3,7 @@ import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
 import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
-import "./index.css";
+// import "./index.css";
 import Button from "./Button"; 
 import Heading from "./Heading";
 import Dropdown from "./Dropdown"

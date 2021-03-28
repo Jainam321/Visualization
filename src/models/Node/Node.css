@@ -1,3 +1,17 @@
+.node {
+  width: 25px;
+  height: 25px;
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
+}
+
+.node-finish {
+  background-color: red;
+}
+
+.node-start {
+  background-color: green;
+}
 
 .node-visited {
   animation-name: visitedAnimation;
@@ -32,6 +46,10 @@
   }
 }
 
+.node-wall {
+  background-color: rgb(12, 53, 71);
+}
+
 .node-shortest-path {
   animation-name: shortestPath;
   animation-duration: 1.5s;
@@ -46,36 +64,16 @@
 @keyframes shortestPath {
   0% {
     transform: scale(0.6);
-    background-color: rgb(255, 254, 106);
+    background-color: #e84545;
   }
 
   50% {
     transform: scale(1.2);
-    background-color: rgb(255, 254, 106);
+    background-color: #e84545;
   }
 
   100% {
     transform: scale(1);
-    background-color: rgb(255, 254, 106);
+    background-color: #e84545;
   }
 }
-.node {
-    width: 25px;
-    height: 25px;
-    outline: 1px solid rgb(0, 6, 10);
-    display: inline-block;
-  }
-  
-  .node-finish {
-    background-color: rgb(248, 2, 2);
-  }
-  
-  .node-start {
-    
-    background-color: rgb(0, 255, 13);
-  }
-  
- 
-  .node-wall {
-    background-color: rgb(12, 53, 71);
-  }
