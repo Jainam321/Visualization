@@ -11,7 +11,7 @@ export default function dijikstra(grid,startnode,endnode){
             visited.set(node);
             console.log(node.row);
             console.log(node.col);
-            if(node==endnode){
+            if(node===endnode){
                 return true;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
@@ -71,7 +71,7 @@ class Graph {
                 temp++;
             }
         })
-        if(temp==0){
+        if(temp===0){
             return false;
         }else{
             return true;
