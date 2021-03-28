@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import "./index.css";
+import "./Navbar.css";
 import Button from "./Button"; 
 import Heading from "./Heading";
 import Dropdown from "./Dropdown"

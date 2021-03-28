@@ -3,9 +3,13 @@ import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
 import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
+<<<<<<< HEAD
 import Astar from "../algorithms/Astar";
 import BFS from "../algorithms/BFS";
 import "./index.css";
+=======
+// import "./index.css";
+>>>>>>> f2c73707c909e6cef4a089c8127752c5d2bcacfd
 import Button from "./Button"; 
 import Heading from "./Heading";
 import Dropdown from "./Dropdown"
