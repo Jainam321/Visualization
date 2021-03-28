@@ -4,6 +4,7 @@ export default function dijikstra(grid,startnode,endnode){
     const visitList = [];
     visitList.push(startnode);
     const graph=creategraph(grid);
+    console.log("alorithm")
     while(visitList.length !== 0) {
         const node = visitList.shift();
         if(node && !visited.has(node)) {
@@ -95,6 +96,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
 
 export function getNodesInShortestPathOrder(finishNode,startNode) {
     const nodesInShortestPathOrder = [];
+    console.log("Display shortest path.")
     let currentNode = finishNode;
     while (currentNode !== null) {
       nodesInShortestPathOrder.unshift(currentNode);

@@ -1,11 +1,32 @@
 
-function Astar(grid1,startNode, finishNode){
-    if(startNode==finishNode || !startNode || !finishNode){
-        return false;
-    }
-    
+function BFS(grid1,startNode, finishNode){
+    // if(startNode==finishNode || !startNode || !finishNode){
+    //     return false;
+    // }
+    startNode.distance=0;
+    const visited=new Map();
+    const visitList=[];
+    visitList.push(startNode)
     const graph=creategraph(grid1);
-    console.log("Graph created");
+    console.log("algorithm");
+    while(visitList.length!==0)
+    {
+        const node =visitList.shift();
+        if(node && !visited.has(node))
+        {
+            visited.set(node);
+            console.log(visited);
+            console.log(node.row);
+            console.log(node.col);
+            if(node==finishNode){
+                return true 
+            }
+            graph.getAdjacents(node).forEach(adj => visitList.push(adj));
+        }
+    }
+    console.log(graph);
+    return false;
+    // console.log("Graph created in BFS");
 
 }
 
@@ -75,4 +96,4 @@ class Graph{
 }
 }
 
-export default Astar;
+export default BFS;
