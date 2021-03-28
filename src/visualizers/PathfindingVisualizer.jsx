@@ -1,10 +1,9 @@
 import React, {useEffect ,useState, useRef} from 'react';
-
 import Node from '../models/Node/Node';
 import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
 import './PathfindingVisualizer.css'; 
-import Heading from "../components/Heading";
-import Dropdown from "../components/Dropdown"
+import {Nav, Navbar, Button, NavDropdown} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -15,29 +14,31 @@ const FINISH_NODE_COL = 39;
 const PathfindingVisualizer = () => {
   const [grid, setGrid] = useState([]);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
-  const [timer, setTimer] = useState(0)
-  const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
+  const [timer, setTimer] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [noOfCellVisited, setNoOfCellVisited] = useState(0);
   const countRef = useRef(null)
 
+
   const handleStart = () => {
-    setIsActive(true)
-    setIsPaused(true)
+    setIsActive(true);
+    setIsPaused(true);
     countRef.current = setInterval(() => {
-      setTimer((timer) => timer + 1)
-    }, 1000)
+      setTimer((timer) => timer + 1);
+    }, 1000);
   }
 
   const handlePause = () => {
-    clearInterval(countRef.current)
-    setIsPaused(false)
+    clearInterval(countRef.current);
+    setIsPaused(false);
   }
 
   const handleReset = () => {
-    clearInterval(countRef.current)
-    setIsActive(false)
-    setIsPaused(false)
-    setTimer(0)
+    clearInterval(countRef.current);
+    setIsActive(false);
+    setIsPaused(false);
+    setTimer(0);
   }
 
   const formatTime = () => {
@@ -105,34 +106,45 @@ const PathfindingVisualizer = () => {
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
 
   const clearBoard = () => {
     handleReset();
     setGrid(getInitialGrid());
+    setNoOfCellVisited(0);
   }
 
 
   return (
     <>
-      <div className="navbar">
-              <Heading name="Path Visualization"></Heading>
-          <ul>
-              <Dropdown name="Dijkstra"></Dropdown>
-              <Dropdown name="Maze and pattern"></Dropdown>
-              
-              <button onClick={() => visualizeDijkstra()}>
-                Start
-              </button>
-              <button onClick={() => clearBoard()}>
-                Clear Board
-              </button>
-              <button >
-                Select Start Node
-              </button>
-              {formatTime()}
-          </ul>
-      </div>
+      <Navbar bg="light" variant="light">
+        <div className="container">
+        <Navbar.Brand href="#home">Path Visualization</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Navbar.Text>
+            <span className="pText">Timer</span>
+            <span className="timeBox">{formatTime()}</span>
+            <span className="pText">No. of Cells Visited</span>
+            <span className="timeBox">{noOfCellVisited}</span>
+          </Navbar.Text>
+          <NavDropdown title="Algorithms" id="basic-nav-dropdown">
+            <NavDropdown.Item href="">Dijkstra</NavDropdown.Item>
+            <NavDropdown.Item href="">**</NavDropdown.Item>
+            <NavDropdown.Item href="">**</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        <div className="m">
+          <span className="pBtn">
+            <Button variant="primary" onClick={() => visualizeDijkstra()}>Start</Button>
+          </span>
+          <span>
+            <Button variant="primary" onClick={() => clearBoard()}>Clear Board</Button>
+          </span>
+        </div>
+        </div>        
+      </Navbar>
+      
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
