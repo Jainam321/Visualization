@@ -3,13 +3,10 @@ import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
 import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
-<<<<<<< HEAD
 import Astar from "../algorithms/Astar";
 import BFS from "../algorithms/BFS";
+import DFS from "../algorithms/DFS";
 import "./index.css";
-=======
-// import "./index.css";
->>>>>>> f2c73707c909e6cef4a089c8127752c5d2bcacfd
 import Button from "./Button"; 
 import Heading from "./Heading";
 import Dropdown from "./Dropdown"
@@ -39,9 +36,10 @@ function Matrix() {
             <ul>
                 <Dropdown name="Algorithm"></Dropdown>
                 <Dropdown name="Maze and pattern"></Dropdown>
-                {/* <button onClick={()=>visualizeBFS(grid1)}>Start</button> */}
+                <button onClick={()=>visualizeBFS(grid1)}>Start</button>
+                {/* <button onClick={()=>visualizeDFS(grid1)}>Start</button> */}
                 {/* <button onClick={()=>visualizeAstar(grid1)}>Start</button> */}
-                <button onClick={()=>visualizeDijkstra(grid1)}>Start</button>
+                {/* <button onClick={()=>visualizeDijkstra(grid1)}>Start</button> */}
                 <Button title="Stop!"></Button>
             </ul>
         </div>
@@ -142,3 +140,12 @@ function visualizeBFS(grid1) {
   // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
 }
 
+
+function visualizeDFS(grid1) {
+  console.log("run");
+  const startNode = grid1[6][10];
+  const finishNode = grid1[7][13];
+  const visitedNodes  = DFS(grid1, startNode, finishNode);
+  // const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
+  // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
+}

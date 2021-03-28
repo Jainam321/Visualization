@@ -1,8 +1,9 @@
 
-function BFS(grid,startNode, finishNode){
+function DFS(grid,startNode, finishNode){
     if(startNode==finishNode || !startNode || !finishNode){
         return false;
     }
+    console.log("in dfs");
     var count=0;
     startNode.distance=0;
     const visited=new Map();
@@ -11,7 +12,7 @@ function BFS(grid,startNode, finishNode){
     const graph=creategraph(grid);
     while(visitList.length!==0)
     {
-        const node =visitList.shift();
+        const node =visitList.pop();
         console.log(graph.getAdjacents(node));
         console.log(visited);
         if(node && !visited.has(node))
@@ -111,4 +112,4 @@ class Graph{
 //     }
 //   }
 
-export default BFS;
+export default DFS;
