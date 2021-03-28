@@ -28,7 +28,7 @@ export default function BFS(grid,startNode, finishNode){
                 return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
-            // updateUnvisitedNeighbors(visitList,node,graph);
+            updateUnvisitedNeighbors(visitList,node,graph);
         }
     }
     return visitedinorder;
@@ -39,18 +39,18 @@ export default function BFS(grid,startNode, finishNode){
 
 function creategraph(grid){
     const graph=new Graph(1000);
-    for(let row=0;row<15;row++)
+    for(let row=0;row<20;row++)
     {
-        for(let col=0;col<40;col++)
+        for(let col=0;col<50;col++)
         {
             graph.addVertex(grid[row][col]);
         }
     }
-    for(let row=0;row<15;row++)
+    for(let row=0;row<20;row++)
     {
-        for(let col=0;col<40;col++)
+        for(let col=0;col<50;col++)
         {
-            if((col+1<40)){
+            if((col+1<50)){
                 graph.addEdge(grid[row][col],grid[row][col+1]);
             }
             if((col-1>=0)){
@@ -59,7 +59,7 @@ function creategraph(grid){
             if((row-1)>=0){
                 graph.addEdge(grid[row][col],grid[row-1][col]);
             }
-            if((row+1)<15){
+            if((row+1)<20){
                 graph.addEdge(grid[row][col],grid[row+1][col]);
             }
         }
@@ -88,8 +88,13 @@ class Graph{
 
   isAdjacent(node,neighbor) {
     var temp=0;
-    this.AdjList.get(node).forEach(adj => {
-        if(adj === neighbor){
+    // this.AdjList.get(node).forEach(adj => {
+    //     if(adj === node){
+    //         temp++;
+    //     }
+    // })
+    this.Adjlist.get(neighbor).forEach( x => {
+        if(x==node){
             temp++;
         }
     })
@@ -101,16 +106,16 @@ class Graph{
 }
 }
 
-// function updateUnvisitedNeighbors(visitList,node,graph) {
-//     console.log("neigbour");
-//     for (const neighbor of visitList) {
-//         if(!graph.isAdjacent(node,neighbor) || neighbor.previousNode !== null){
-//             continue;
-//         }else if(graph.isAdjacent(node,neighbor)){
-//             neighbor.previousNode = node;
-//         }
-//     }
-//   }
+function updateUnvisitedNeighbors(visitList,node,graph) {
+    console.log("neigbour");
+    for (const neighbor of visitList) {
+        if(!graph.isAdjacent(node,neighbor) || neighbor.previousNode !== null){
+            continue;
+        }else if(graph.isAdjacent(node,neighbor)){
+            neighbor.previousNode = node;
+        }
+    }
+  }
 
 export function getNodesInShortestPathOrder(finishNode,startNode) {
     console.log("shortest Path");
