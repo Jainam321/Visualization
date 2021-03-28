@@ -2,8 +2,11 @@ import React, { useEffect ,useState} from "react";
 import "./Matrix.css";
 import Node from "./Node";
 import "./Node.css";
-import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
-// import "./index.css";
+// import dijkstra,{getNodesInShortestPathOrder} from "../algorithms/dijkstra";
+import Astar from "../algorithms/Astar";
+import BFS from "../algorithms/BFS";
+import DFS from "../algorithms/DFS";
+import "./index.css";
 import Button from "./Button"; 
 import Heading from "./Heading";
 import Dropdown from "./Dropdown"
@@ -33,8 +36,10 @@ function Matrix() {
             <ul>
                 <Dropdown name="Algorithm"></Dropdown>
                 <Dropdown name="Maze and pattern"></Dropdown>
-                
-                <button onClick={()=>visualizeDijkstra(grid1)}>Start</button>
+                <button onClick={()=>visualizeBFS(grid1)}>Start</button>
+                {/* <button onClick={()=>visualizeDFS(grid1)}>Start</button> */}
+                {/* <button onClick={()=>visualizeAstar(grid1)}>Start</button> */}
+                {/* <button onClick={()=>visualizeDijkstra(grid1)}>Start</button> */}
                 <Button title="Stop!"></Button>
             </ul>
         </div>
@@ -113,4 +118,34 @@ function visualizeDijkstra(grid1) {
   const visitedNodes  = dijkstra(grid1, startNode, finishNode);
   const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
   animateDijkstra(visitedNodes, nodesInShortestPathOrder);
+}
+
+
+function visualizeAstar(grid1) {
+  console.log("run");
+  const startNode = grid1[6][10];
+  const finishNode = grid1[7][13];
+  const visitedNodes  = Astar(grid1, startNode, finishNode);
+  // const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
+  // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
+}
+
+
+function visualizeBFS(grid1) {
+  console.log("run");
+  const startNode = grid1[6][10];
+  const finishNode = grid1[7][13];
+  const visitedNodes  = BFS(grid1, startNode, finishNode);
+  // const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
+  // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
+}
+
+
+function visualizeDFS(grid1) {
+  console.log("run");
+  const startNode = grid1[6][10];
+  const finishNode = grid1[7][13];
+  const visitedNodes  = DFS(grid1, startNode, finishNode);
+  // const nodesInShortestPathOrder =  getNodesInShortestPathOrder(finishNode,startNode)
+  // animateDijkstra(visitedNodes, nodesInShortestPathOrder);
 }
