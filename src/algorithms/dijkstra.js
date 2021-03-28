@@ -4,7 +4,7 @@ export default function dijikstra(grid,startnode,endnode){
     const visitList = [];
     visitList.push(startnode);
     const graph=creategraph(grid);
-    console.log("alorithm")
+    console.log("algorithm")
     while(visitList.length !== 0) {
         const node = visitList.shift();
         if(node && !visited.has(node)) {

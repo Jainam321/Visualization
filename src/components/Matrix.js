@@ -75,7 +75,7 @@ const createNode = (col, row) => {
     col,
     row,
     isStart: row === 6 && col === 10,
-    isFinish: row === 13 && col === 13,
+    isFinish: row === 7 && col === 13,
     distance: Infinity,
     isVisited: false,
     isWall: false,
