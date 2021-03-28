@@ -1,21 +1,23 @@
 
-function BFS(grid,startNode, finishNode){
+export default function BFS(grid,startNode, finishNode){
     if(startNode==finishNode || !startNode || !finishNode){
         return false;
     }
+    console.log("in BFS");
     var count=0;
     startNode.distance=0;
     const visited=new Map();
+    const visitedinorder=[];
     const visitList=[];
     visitList.push(startNode)
     const graph=creategraph(grid);
     while(visitList.length!==0)
     {
         const node =visitList.shift();
-        console.log(graph.getAdjacents(node));
-        console.log(visited);
         if(node && !visited.has(node))
         {
+            if (node.isWall) continue;
+            visitedinorder.push(node);
             count++;
             visited.set(node);
             console.log("visited");
@@ -23,20 +25,20 @@ function BFS(grid,startNode, finishNode){
             console.log(node.col);
             if(node===finishNode){
                 console.log("count",count);
-                return true 
+                return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
             // updateUnvisitedNeighbors(visitList,node,graph);
         }
     }
-    return false;
+    return visitedinorder;
 
 }
 
 
 
 function creategraph(grid){
-    const graph=new Graph(600);
+    const graph=new Graph(1000);
     for(let row=0;row<15;row++)
     {
         for(let col=0;col<40;col++)
@@ -86,7 +88,6 @@ class Graph{
 
   isAdjacent(node,neighbor) {
     var temp=0;
-    console.log(this.Adjlist);
     this.AdjList.get(node).forEach(adj => {
         if(adj === neighbor){
             temp++;
@@ -101,9 +102,9 @@ class Graph{
 }
 
 // function updateUnvisitedNeighbors(visitList,node,graph) {
+//     console.log("neigbour");
 //     for (const neighbor of visitList) {
-//         console.log(neighbor);
-//         if(!graph.isAdjacent(node,neighbor)){
+//         if(!graph.isAdjacent(node,neighbor) || neighbor.previousNode !== null){
 //             continue;
 //         }else if(graph.isAdjacent(node,neighbor)){
 //             neighbor.previousNode = node;
@@ -111,4 +112,20 @@ class Graph{
 //     }
 //   }
 
-export default BFS;
+export function getNodesInShortestPathOrder(finishNode,startNode) {
+    console.log("shortest Path");
+    const nodesInShortestPathOrder = [];
+    let currentNode = finishNode;
+    while (currentNode !== null) {
+      nodesInShortestPathOrder.unshift(currentNode);
+      console.log(currentNode.row);
+      console.log(currentNode.col);
+      currentNode = currentNode.previousNode;
+      if(currentNode===startNode){
+          console.log(currentNode.row);
+          console.log(currentNode.col);
+          break;
+      }
+    }
+    return nodesInShortestPathOrder;
+  }

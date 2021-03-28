@@ -1,22 +1,23 @@
 
-function DFS(grid,startNode, finishNode){
+export default function DFS(grid,startNode, finishNode){
     if(startNode==finishNode || !startNode || !finishNode){
         return false;
     }
-    console.log("in dfs");
+    console.log("in DFS");
     var count=0;
     startNode.distance=0;
     const visited=new Map();
+    const visitedinorder=[];
     const visitList=[];
     visitList.push(startNode)
     const graph=creategraph(grid);
     while(visitList.length!==0)
     {
         const node =visitList.pop();
-        console.log(graph.getAdjacents(node));
-        console.log(visited);
         if(node && !visited.has(node))
         {
+            if (node.isWall) continue;
+            visitedinorder.push(node);
             count++;
             visited.set(node);
             console.log("visited");
@@ -24,20 +25,20 @@ function DFS(grid,startNode, finishNode){
             console.log(node.col);
             if(node===finishNode){
                 console.log("count",count);
-                return true 
+                return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
             // updateUnvisitedNeighbors(visitList,node,graph);
         }
     }
-    return false;
+    return visitedinorder;
 
 }
 
 
 
 function creategraph(grid){
-    const graph=new Graph(600);
+    const graph=new Graph(1000);
     for(let row=0;row<15;row++)
     {
         for(let col=0;col<40;col++)
@@ -87,7 +88,6 @@ class Graph{
 
   isAdjacent(node,neighbor) {
     var temp=0;
-    console.log(this.Adjlist);
     this.AdjList.get(node).forEach(adj => {
         if(adj === neighbor){
             temp++;
@@ -101,15 +101,31 @@ class Graph{
 }
 }
 
-// function updateUnvisitedNeighbors(visitList,node,graph) {
-//     for (const neighbor of visitList) {
-//         console.log(neighbor);
-//         if(!graph.isAdjacent(node,neighbor)){
-//             continue;
-//         }else if(graph.isAdjacent(node,neighbor)){
-//             neighbor.previousNode = node;
-//         }
-//     }
-//   }
+function updateUnvisitedNeighbors(visitList,node,graph) {
+    for (const neighbor of visitList) {
+        console.log(neighbor);
+        if(neighbor.previousNode!==null && !graph.isAdjacent(node,neighbor)){
+            continue;
+        }else if(graph.isAdjacent(node,neighbor)){
+            neighbor.previousNode = node;
+        }
+    }
+  }
 
-export default DFS;
+export function getNodesInShortestPathOrder(finishNode,startNode) {
+    console.log("shortest Path");
+    const nodesInShortestPathOrder = [];
+    let currentNode = finishNode;
+    while (currentNode !== null) {
+      nodesInShortestPathOrder.unshift(currentNode);
+      console.log(currentNode.row);
+      console.log(currentNode.col);
+      currentNode = currentNode.previousNode;
+      if(currentNode===startNode){
+          console.log(currentNode.row);
+          console.log(currentNode.col);
+          break;
+      }
+    }
+    return nodesInShortestPathOrder;
+  }

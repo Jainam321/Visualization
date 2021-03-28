@@ -1,6 +1,8 @@
 import React, {useEffect ,useState, useRef} from 'react';
 import Node from '../models/Node/Node';
-import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
+// import dijkstra,{getNodesInShortestPathOrder} from '../algorithms/dijkstra';
+// import BFS,{getNodesInShortestPathOrder} from '../algorithms/BFS';
+import DFS,{getNodesInShortestPathOrder} from '../algorithms/DFS';
 import './PathfindingVisualizer.css'; 
 import {Nav, Navbar, Button, NavDropdown} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -103,8 +105,8 @@ const PathfindingVisualizer = () => {
     handleStart();
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    const visitedNodesInOrder = DFS(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode,startNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
