@@ -140,6 +140,15 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(0);
     clearGrid();
     // setAlgorithm("Choose Algorithm");
+    // setmazeAlgorithm("Choose Maze Algorithm");
+    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+  }
+
+  const clearVisualization = () => {
+    handleReset();
+    setNoOfCellVisited(0);
+    clearGrid();
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
@@ -201,12 +210,6 @@ const PathfindingVisualizer = () => {
         <div className="container">
         <Navbar.Brand href="#home">Path Visualization</Navbar.Brand>
         <Nav className="mr-auto">
-          <Navbar.Text>
-            <span className="pText">Timer</span>
-            <span className="timeBox">{formatTime()}</span>
-            <span className="pText">No. of Cells Visited</span>
-            <span className="timeBox">{noOfCellVisited}</span>
-          </Navbar.Text>
           <NavDropdown title={algorithm} id="basic-nav-dropdown">
             <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("BFS")}>BFS</NavDropdown.Item>
@@ -254,12 +257,17 @@ const PathfindingVisualizer = () => {
             <Button variant="secondary" size="sm" onClick={() => clearBoard()}>Clear Board</Button>
           </span>
           <span className="pBtn">
-            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
+            <Button variant="secondary" size="sm" onClick={() => clearVisualization()}>Clear Visualization</Button>
           </span>
+          <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
         </div>
         </div>        
       </Navbar>
-      
+      <span className="pText">Timer</span>
+      <span className="timeBox">{formatTime()}</span>
+      <span className="pText">No. of Cells Visited</span>
+      <span className="timeBox">{noOfCellVisited}</span>
+
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
