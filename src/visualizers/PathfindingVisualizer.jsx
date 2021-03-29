@@ -7,6 +7,7 @@ import Node from '../models/Node/Node';
 import './PathfindingVisualizer.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  basicRandom from '../mazeAlgorithms/basicRandom.js';
+import  basicWeighted from '../mazeAlgorithms/basicWeighted.js';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -133,25 +134,6 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
 
-
-
-  const demoMazeAlgorithm=()=>{
-    if(mazeAlgorithm=="Basic Random Maze")
-    {
-      // basicRandom(grid);
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-      var griddef=basicRandom(grid,startNode, finishNode);
-      for(var i=0;i<griddef.length;i++)
-      {
-        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-        'node node-wall';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col, isAddWeight);
-        setGrid(newGrid);
-      }
-    };
-  }
-
   const clearBoard = () => {
     handleReset();
     setGrid(getInitialGrid());
@@ -161,6 +143,37 @@ const PathfindingVisualizer = () => {
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
+
+  const demoMazeAlgorithm=()=>{
+    clearBoard();
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    if(mazeAlgorithm=="Basic Random Maze")
+    {
+      // basicRandom(grid);
+      var griddef=basicRandom(grid,startNode, finishNode);
+      for(var i=0;i<griddef.length;i++)
+      {
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+        'node node-wall';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col, isAddWeight);
+        setGrid(newGrid);
+      }
+    }
+    else if(mazeAlgorithm=="Basic Weight Maze")
+    {
+        var griddef=basicWeighted(grid,startNode, finishNode);
+        for(var i=0;i<griddef.length;i++)
+        {
+          document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-weight';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+          setGrid(newGrid);
+        }
+    }
+  }
+
+  
 
   const clearGrid = () => {
       const newGrid = grid;
