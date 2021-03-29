@@ -137,7 +137,17 @@ const PathfindingVisualizer = () => {
   const demoMazeAlgorithm=()=>{
     if(mazeAlgorithm=="Basic Random Maze")
     {
-      basicRandom(grid);
+      // basicRandom(grid);
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      var griddef=basicRandom(grid,startNode, finishNode);
+      for(var i=0;i<griddef.length;i++)
+      {
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+        'node node-wall';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col, isAddWeight);
+        setGrid(newGrid);
+      }
     };
   }
 
