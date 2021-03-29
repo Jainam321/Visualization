@@ -6,6 +6,7 @@ import {Nav, Navbar, Button, NavDropdown, Toast} from 'react-bootstrap';
 import Node from '../models/Node/Node';
 import './PathfindingVisualizer.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import  basicRandom from '../mazeAlgorithms/basicRandom.js';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -21,6 +22,7 @@ const PathfindingVisualizer = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [noOfCellVisited, setNoOfCellVisited] = useState(0);
   const [algorithm, setAlgorithm] = useState("Choose Algorithm");
+  const [mazeAlgorithm , setmazeAlgorithm ]=useState("Choose Maze Algorithm");
   const [show, setShow] = useState(false);
   const countRef = useRef(null)
 
@@ -129,6 +131,15 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
 
+
+
+  const demoMazeAlgorithm=()=>{
+    if(mazeAlgorithm=="Basic Random Maze")
+    {
+      basicRandom(grid);
+    };
+  }
+
   const clearBoard = () => {
     handleReset();
     setGrid(getInitialGrid());
@@ -171,6 +182,24 @@ const PathfindingVisualizer = () => {
             <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("BFS")}>BFS</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("DFS")}>DFS</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title={mazeAlgorithm} id="basic-nav-dropdown">
+            <NavDropdown.Item href="" onClick={() => {
+              setmazeAlgorithm("Basic Random Maze");
+              demoMazeAlgorithm();
+            }}>Basic Random Maze</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => {
+              setmazeAlgorithm("Basic Weight Maze");
+              demoMazeAlgorithm();
+            }}>Basic Weight Maze</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => {
+              setmazeAlgorithm("Simple Stair Pattern");
+              demoMazeAlgorithm();
+            }}>Simple Stair Pattern</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => {
+              setmazeAlgorithm("Recursive Division");
+              demoMazeAlgorithm();
+            }}>Recursive Division</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <div>

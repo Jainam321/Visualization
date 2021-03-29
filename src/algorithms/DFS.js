@@ -109,11 +109,12 @@ class Graph{
 function updateUnvisitedNeighbors(visitList,node,graph) {
     for (const neighbor of visitList) {
         console.log(neighbor);
-        if(neighbor.previousNode!==null && !graph.isAdjacent(node,neighbor)){
-            continue;
-        }else if(graph.isAdjacent(node,neighbor)){
-            neighbor.previousNode = node;
-        }
+        neighbor.previousNode = node;
+        // if(neighbor.previousNode!==null && !graph.isAdjacent(node,neighbor)){
+        //     continue;
+        // }else if(graph.isAdjacent(node,neighbor)){
+        //     neighbor.previousNode = node;
+        // }
     }
   }
 
