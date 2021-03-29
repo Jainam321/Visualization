@@ -22,6 +22,7 @@ const PathfindingVisualizer = () => {
   const [noOfCellVisited, setNoOfCellVisited] = useState(0);
   const [algorithm, setAlgorithm] = useState("Choose Algorithm");
   const [show, setShow] = useState(false);
+  const [isAddWeight, setIsAddWeight] = useState(false);
   const countRef = useRef(null)
 
 
@@ -61,14 +62,14 @@ const PathfindingVisualizer = () => {
   },[])
 
   const handleMouseDown = (row, col) => {
-    const newGrid = getNewGridWithWallToggled(grid, row, col);
+    const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight);
     setGrid(newGrid);
     setMouseIsPressed(true);
   }
 
   const handleMouseEnter = (row, col) => {
     if (!mouseIsPressed) return;
-    const newGrid = getNewGridWithWallToggled(grid, row, col);
+    const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight);
     setGrid(newGrid);
   }
 
@@ -154,6 +155,10 @@ const PathfindingVisualizer = () => {
       }
   }
 
+  const addWeights = () => {
+    setIsAddWeight(!isAddWeight);
+  }
+
 
   return (
     <>
@@ -188,10 +193,15 @@ const PathfindingVisualizer = () => {
         </div>
         <div className="m">
           <span className="pBtn">
-            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
+            <Button variant="success" size="sm" onClick={() => addWeights()}>
+              {isAddWeight ? "Adding Weights" : "Add Weights"}
+            </Button>
           </span>
-          <span>
-            <Button variant="secondary" onClick={() => clearBoard()}>Clear Board</Button>
+          <span className="pBtn">
+            <Button variant="secondary" size="sm" onClick={() => clearBoard()}>Clear Board</Button>
+          </span>
+          <span className="pBtn">
+            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
           </span>
         </div>
         </div>        
@@ -202,7 +212,7 @@ const PathfindingVisualizer = () => {
           return (
             <div key={rowIdx}>
               {row.map((node, nodeIdx) => {
-                const {row, col, isFinish, isStart, isWall} = node;
+                const {row, col, isFinish, isStart, isWall, weight} = node;
                 return (
                   <Node
                     key={nodeIdx}
@@ -211,6 +221,7 @@ const PathfindingVisualizer = () => {
                     isStart={isStart}
                     isWall={isWall}
                     mouseIsPressed={mouseIsPressed}
+                    weight={weight}
                     onMouseDown={(row, col) => handleMouseDown(row, col)}
                     onMouseEnter={(row, col) =>
                       handleMouseEnter(row, col)
@@ -251,15 +262,17 @@ const createNode = (col, row) => {
         isVisited: false,
         isWall: false,
         previousNode: null,
+        weight: 0,
     };
 };
 
-const getNewGridWithWallToggled = (grid, row, col) => {
+const getNewGridWithWallToggled = (grid, row, col, isAddWeight) => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
     const newNode = {
         ...node,
-        isWall: !node.isWall,
+        isWall: isAddWeight ? false : !node.isWall,
+        weight: node.weight==0 && isAddWeight ? 10 : 0,
     };
     newGrid[row][col] = newNode;
     return newGrid;
