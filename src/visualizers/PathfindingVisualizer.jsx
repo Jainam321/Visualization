@@ -12,6 +12,7 @@ const START_NODE_COL = 10;
 const FINISH_NODE_ROW = 8;
 const FINISH_NODE_COL = 39;
 
+const NODE_WEIGHT =10;
 
 const PathfindingVisualizer = () => {
   const [grid, setGrid] = useState([]);
@@ -272,7 +273,7 @@ const getNewGridWithWallToggled = (grid, row, col, isAddWeight) => {
     const newNode = {
         ...node,
         isWall: isAddWeight ? false : !node.isWall,
-        weight: node.weight==0 && isAddWeight ? 10 : 0,
+        weight: node.weight==0 && isAddWeight ? NODE_WEIGHT : 0,
     };
     newGrid[row][col] = newNode;
     return newGrid;
