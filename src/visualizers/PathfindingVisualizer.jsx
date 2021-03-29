@@ -133,6 +133,25 @@ const PathfindingVisualizer = () => {
     handleReset();
     setGrid(getInitialGrid());
     setNoOfCellVisited(0);
+    clearGrid();
+    // setAlgorithm("Choose Algorithm");
+    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+  }
+
+  const clearGrid = () => {
+      const newGrid = grid;
+      for (const row of newGrid) {
+        for (const node of row) {
+          let nodeClassName = document.getElementById(`node-${node.row}-${node.col}`,).className;
+          if( nodeClassName !== 'node node-start' && 
+              nodeClassName !== 'node node-finish' && 
+              nodeClassName !== 'node node-wall') {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node';
+          }
+        }
+      }
   }
 
 
@@ -172,7 +191,7 @@ const PathfindingVisualizer = () => {
             <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
           </span>
           <span>
-            <Button variant="primary" onClick={() => clearBoard()}>Clear Board</Button>
+            <Button variant="secondary" onClick={() => clearBoard()}>Clear Board</Button>
           </span>
         </div>
         </div>        
