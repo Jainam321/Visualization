@@ -8,6 +8,7 @@ import './PathfindingVisualizer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  basicRandom from '../mazeAlgorithms/basicRandom.js';
 import  basicWeighted from '../mazeAlgorithms/basicWeighted.js';
+import  Simplestair from '../mazeAlgorithms/Simplestair.js';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -172,6 +173,17 @@ const PathfindingVisualizer = () => {
     else if(mazeAlgorithm=="Basic Weight Maze")
     {
         var griddef=basicWeighted(grid,startNode, finishNode);
+        for(var i=0;i<griddef.length;i++)
+        {
+          document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-weight';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+          setGrid(newGrid);
+        }
+    }
+    else if(mazeAlgorithm=="Simple Stair Pattern")
+    {
+        var griddef=Simplestair(grid,startNode, finishNode);
         for(var i=0;i<griddef.length;i++)
         {
           document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
