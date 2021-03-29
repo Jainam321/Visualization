@@ -103,7 +103,7 @@ const PathfindingVisualizer = () => {
     handlePause();
   }
 
-  const visualizeDijkstra = () => {
+  const visualizeAlgorithm = () => {
     handleStart();
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -169,7 +169,7 @@ const PathfindingVisualizer = () => {
         </div>
         <div className="m">
           <span className="pBtn">
-            <Button variant="primary" onClick={() => visualizeDijkstra()}>Start</Button>
+            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
           </span>
           <span>
             <Button variant="primary" onClick={() => clearBoard()}>Clear Board</Button>
