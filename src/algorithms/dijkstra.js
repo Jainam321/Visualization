@@ -96,7 +96,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
   }
 }
 
-export function getNodesInShortestPathOrder(finishNode,startNode) {
+export function getNodesInShortestPathOrderDijkstra(finishNode,startNode) {
   const nodesInShortestPathOrder = [];
   let currentNode = finishNode;
   while (currentNode !== null) {

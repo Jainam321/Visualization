@@ -117,7 +117,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
     }
   }
 
-export function getNodesInShortestPathOrder(finishNode,startNode) {
+export function getNodesInShortestPathOrderBFS(finishNode,startNode) {
     console.log("shortest Path");
     const nodesInShortestPathOrder = [];
     let currentNode = finishNode;

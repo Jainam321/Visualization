@@ -28,7 +28,7 @@ export default function DFS(grid,startNode, finishNode){
                 return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
-            // updateUnvisitedNeighbors(visitList,node,graph);
+            updateUnvisitedNeighbors(visitList,node,graph);
         }
     }
     return visitedinorder;
@@ -88,8 +88,13 @@ class Graph{
 
   isAdjacent(node,neighbor) {
     var temp=0;
-    this.AdjList.get(node).forEach(adj => {
-        if(adj === neighbor){
+    // this.AdjList.get(node).forEach(adj => {
+    //     if(adj === neighbor){
+    //         temp++;
+    //     }
+    // })
+    this.Adjlist.get(neighbor).forEach( x => {
+        if(x==node){
             temp++;
         }
     })
@@ -112,7 +117,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
     }
   }
 
-export function getNodesInShortestPathOrder(finishNode,startNode) {
+export function getNodesInShortestPathOrderDFS(finishNode,startNode) {
     console.log("shortest Path");
     const nodesInShortestPathOrder = [];
     let currentNode = finishNode;

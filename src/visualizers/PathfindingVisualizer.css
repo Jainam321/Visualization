@@ -19,3 +19,10 @@
   padding: 2px 5px;
   margin-right: 5px;
 }
+
+.toast{
+  background-color: #e84545;
+  color: white;
+  border-radius: 3px;
+  padding: 2px 5px;
+}

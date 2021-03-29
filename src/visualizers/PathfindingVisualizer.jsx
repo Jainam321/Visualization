@@ -1,10 +1,10 @@
 import React, {useEffect ,useState, useRef} from 'react';
+import dijkstra,{getNodesInShortestPathOrderDijkstra} from '../algorithms/dijkstra';
+import BFS,{getNodesInShortestPathOrderBFS} from '../algorithms/BFS';
+import DFS,{getNodesInShortestPathOrderDFS} from '../algorithms/DFS';
+import {Nav, Navbar, Button, NavDropdown, Toast} from 'react-bootstrap';
 import Node from '../models/Node/Node';
-// import dijkstra,{getNodesInShortestPathOrder} from '../algorithms/dijkstra';
-import BFS,{getNodesInShortestPathOrder} from '../algorithms/BFS';
-// import DFS,{getNodesInShortestPathOrder} from '../algorithms/DFS';
 import './PathfindingVisualizer.css'; 
-import {Nav, Navbar, Button, NavDropdown} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const START_NODE_ROW = 10;
@@ -20,6 +20,8 @@ const PathfindingVisualizer = () => {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [noOfCellVisited, setNoOfCellVisited] = useState(0);
+  const [algorithm, setAlgorithm] = useState("Choose Algorithm");
+  const [show, setShow] = useState(false);
   const countRef = useRef(null)
 
 
@@ -74,7 +76,7 @@ const PathfindingVisualizer = () => {
     setMouseIsPressed(false);
   }
 
-  const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {
+  const animateAlgorithm = (visitedNodesInOrder, nodesInShortestPathOrder) => {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -105,9 +107,25 @@ const PathfindingVisualizer = () => {
     handleStart();
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = BFS(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode,startNode);
-    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    let visitedNodesInOrder, nodesInShortestPathOrder;
+    if(algorithm == "Dijkstra"){
+      visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+      nodesInShortestPathOrder = getNodesInShortestPathOrderDijkstra(finishNode,startNode);
+    }
+    else if(algorithm == "BFS"){
+      visitedNodesInOrder = BFS(grid, startNode, finishNode);
+      nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode,startNode);
+    }
+    else if(algorithm == "DFS"){
+      visitedNodesInOrder = DFS(grid, startNode, finishNode);
+      nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode,startNode);
+    }
+    else{
+      setShow(true);
+      handlePause();
+      return;
+    }
+    animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
 
@@ -130,12 +148,25 @@ const PathfindingVisualizer = () => {
             <span className="pText">No. of Cells Visited</span>
             <span className="timeBox">{noOfCellVisited}</span>
           </Navbar.Text>
-          <NavDropdown title="Algorithms" id="basic-nav-dropdown">
-            <NavDropdown.Item href="">Dijkstra</NavDropdown.Item>
-            <NavDropdown.Item href="">**</NavDropdown.Item>
-            <NavDropdown.Item href="">**</NavDropdown.Item>
+          <NavDropdown title={algorithm} id="basic-nav-dropdown">
+            <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => setAlgorithm("BFS")}>BFS</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => setAlgorithm("DFS")}>DFS</NavDropdown.Item>
           </NavDropdown>
         </Nav>
+        <div>
+
+        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide 
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: "50%",
+          }}>
+          <Toast.Header>
+            <strong className="mr-auto">First Choose Algorithm</strong>
+          </Toast.Header>
+        </Toast>
+        </div>
         <div className="m">
           <span className="pBtn">
             <Button variant="primary" onClick={() => visualizeDijkstra()}>Start</Button>
