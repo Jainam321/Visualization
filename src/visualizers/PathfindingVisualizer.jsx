@@ -24,6 +24,7 @@ const PathfindingVisualizer = () => {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [noOfCellVisited, setNoOfCellVisited] = useState(0);
+  const [totalcost, settotalcost] = useState(0);
   const [algorithm, setAlgorithm] = useState("Choose Algorithm");
   const [mazeAlgorithm , setmazeAlgorithm ]=useState("Choose Maze Algorithm");
   const [show, setShow] = useState(false);
@@ -94,8 +95,6 @@ const PathfindingVisualizer = () => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-visited';
-        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
       }, 10 * i);
     }
   }
@@ -104,9 +103,8 @@ const PathfindingVisualizer = () => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
-        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-shortest-path';
       }, 50 * i);
     }
     handlePause();
@@ -134,6 +132,7 @@ const PathfindingVisualizer = () => {
       handlePause();
       return;
     }
+    settotalcost(finishNode.distance);
     animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
@@ -282,6 +281,8 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{formatTime()}</span>
       <span className="pText">No. of Cells Visited</span>
       <span className="timeBox">{noOfCellVisited}</span>
+      <span className="pText">Total Cost</span>
+      <span className="timeBox">{totalcost}</span>
 
       <div className="grid">
         {grid.map((row, rowIdx) => {
