@@ -156,11 +156,11 @@ const PathfindingVisualizer = () => {
 
   const demoMazeAlgorithm=()=>{
     clearBoard();
+    console.log(mazeAlgorithm);
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     if(mazeAlgorithm=="Basic Random Maze")
     {
-      // basicRandom(grid);
       var griddef=basicRandom(grid,startNode, finishNode);
       for(var i=0;i<griddef.length;i++)
       {
