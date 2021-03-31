@@ -95,6 +95,8 @@ const PathfindingVisualizer = () => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-visited';
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
       }, 10 * i);
     }
   }
@@ -105,6 +107,8 @@ const PathfindingVisualizer = () => {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-shortest-path';
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish'; 
       }, 50 * i);
     }
     handlePause();
@@ -141,6 +145,7 @@ const PathfindingVisualizer = () => {
     handleReset();
     setGrid(getInitialGrid());
     setNoOfCellVisited(0);
+    settotalcost(0);
     clearGrid();
     // setAlgorithm("Choose Algorithm");
     // setmazeAlgorithm("Choose Maze Algorithm");
@@ -151,6 +156,7 @@ const PathfindingVisualizer = () => {
   const clearVisualization = () => {
     handleReset();
     setNoOfCellVisited(0);
+    settotalcost(0);
     clearGrid();
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
