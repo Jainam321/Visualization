@@ -90,7 +90,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
       if((neighbor.previousNode !== null && neighbor.distance <= node.distance)  || !graph.isAdjacent(node,neighbor) ){
           continue;
       }else if(graph.isAdjacent(node,neighbor)){
-          neighbor.distance = node.distance + 1;
+          neighbor.distance = node.distance + neighbor.weight + 1;
           neighbor.previousNode = node;
       }
   }

@@ -88,11 +88,6 @@ class Graph{
 
   isAdjacent(node,neighbor) {
     var temp=0;
-    // this.AdjList.get(node).forEach(adj => {
-    //     if(adj === node){
-    //         temp++;
-    //     }
-    // })
     this.Adjlist.get(neighbor).forEach( x => {
         if(x==node){
             temp++;
@@ -112,6 +107,7 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
         if(!graph.isAdjacent(node,neighbor) || neighbor.previousNode !== null){
             continue;
         }else if(graph.isAdjacent(node,neighbor)){
+            neighbor.distance = node.distance + neighbor.weight + 1;
             neighbor.previousNode = node;
         }
     }
