@@ -26,3 +26,12 @@
   border-radius: 3px;
   padding: 2px 5px;
 }
+
+.noPathMessage{
+  background-color: #e84545;
+  color: white;
+  border-radius: 3px;
+  padding: 2px 5px;
+  margin-right: 5px;
+  font-size: 25px;
+}

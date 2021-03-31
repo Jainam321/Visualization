@@ -105,8 +105,12 @@ const PathfindingVisualizer = () => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-shortest-path';
+        if(node.weight === NODE_WEIGHT){
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
+        }
+        else{
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+        }
         document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
         document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish'; 
       }, 50 * i);
@@ -266,6 +270,16 @@ const PathfindingVisualizer = () => {
             <strong className="mr-auto">First Choose Algorithm</strong>
           </Toast.Header>
         </Toast>
+        <Toast onClose={() => clearVisualization()} show={totalcost == Infinity} delay={3000} 
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: "50%",
+          }}>
+          <Toast.Header>
+            <strong className="mr-auto">No Path Found</strong>
+          </Toast.Header>
+        </Toast>
         </div>
         <div className="m">
           <span className="pBtn">
@@ -289,7 +303,6 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{noOfCellVisited}</span>
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
-
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
