@@ -167,6 +167,7 @@ const PathfindingVisualizer = () => {
   }
 
   const demoMazeAlgorithm=()=>{
+    if(mazeAlgorithm === "Choose Maze Algorithm") return;
     clearBoard();
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -227,6 +228,9 @@ const PathfindingVisualizer = () => {
     setIsAddWeight(!isAddWeight);
   }
 
+  useEffect(() => {
+    demoMazeAlgorithm();
+  },[mazeAlgorithm]);
 
   return (
     <>
@@ -242,19 +246,15 @@ const PathfindingVisualizer = () => {
           <NavDropdown title={mazeAlgorithm} id="basic-nav-dropdown">
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Basic Random Maze");
-              demoMazeAlgorithm();
             }}>Basic Random Maze</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Basic Weight Maze");
-              demoMazeAlgorithm();
             }}>Basic Weight Maze</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Simple Stair Pattern");
-              demoMazeAlgorithm();
             }}>Simple Stair Pattern</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Recursive Division");
-              demoMazeAlgorithm();
             }}>Recursive Division</NavDropdown.Item>
           </NavDropdown>
         </Nav>
