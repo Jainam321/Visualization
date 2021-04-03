@@ -2,6 +2,7 @@ import React, {useEffect ,useState, useRef} from 'react';
 import dijkstra,{getNodesInShortestPathOrderDijkstra} from '../algorithms/dijkstra';
 import BFS,{getNodesInShortestPathOrderBFS} from '../algorithms/BFS';
 import DFS,{getNodesInShortestPathOrderDFS} from '../algorithms/DFS';
+import AStar,{getNodesInShortestPathOrderAStar} from '../algorithms/Astar';
 import {Nav, Navbar, Button, NavDropdown, Toast} from 'react-bootstrap';
 import Node from '../models/Node/Node';
 import './PathfindingVisualizer.css'; 
@@ -134,6 +135,9 @@ const PathfindingVisualizer = () => {
     else if(algorithm == "DFS"){
       visitedNodesInOrder = DFS(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode,startNode);
+    }else if(algorithm == "AStar"){
+      visitedNodesInOrder = AStar(grid, startNode, finishNode);
+      nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(finishNode,startNode);
     }
     else{
       setShow(true);
@@ -242,6 +246,7 @@ const PathfindingVisualizer = () => {
             <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("BFS")}>BFS</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("DFS")}>DFS</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => setAlgorithm("AStar")}>AStar</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title={mazeAlgorithm} id="basic-nav-dropdown">
             <NavDropdown.Item href="" onClick={() => {
