@@ -17,8 +17,8 @@ export default function AStar(grid,startnode,endnode){
                 return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
-            updateUnvisitedNeighbors(visitList,node,graph,endnode);
-            sortnodebydistance(visitList);
+            updateUnvisitedNeighbors(visitList,node,graph);
+            sortnodebydistance(visitList,endnode);
         }
     }
     return visitedinorder;
@@ -81,17 +81,16 @@ export default function AStar(grid,startnode,endnode){
     }
   } 
   
-  function sortnodebydistance(unvisitednodes){
-    unvisitednodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
+  function sortnodebydistance(unvisitednodes,finishNode){
+    unvisitednodes.sort((nodeA, nodeB) => (nodeA.distance + manhattendistance(nodeA,finishNode)) - (nodeB.distance + manhattendistance(nodeB,finishNode)));
   }
   
-  function updateUnvisitedNeighbors(visitList,node,graph,finishNode) {
+  function updateUnvisitedNeighbors(visitList,node,graph) {
     for (const neighbor of visitList) {
         if((neighbor.previousNode !== null && neighbor.distance <= node.distance)  || !graph.isAdjacent(node,neighbor) ){
             continue;
         }else if(graph.isAdjacent(node,neighbor)){
-            var hn=manhattendistance(neighbor,finishNode);
-            neighbor.distance = node.distance + neighbor.weight + 1 + hn;
+            neighbor.distance = node.distance + neighbor.weight + 1;
             neighbor.previousNode = node;
         }
     }
