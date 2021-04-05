@@ -2,6 +2,7 @@ import React, {useEffect ,useState, useRef} from 'react';
 import dijkstra,{getNodesInShortestPathOrderDijkstra} from '../algorithms/dijkstra';
 import BFS,{getNodesInShortestPathOrderBFS} from '../algorithms/BFS';
 import DFS,{getNodesInShortestPathOrderDFS} from '../algorithms/DFS';
+import AStar,{getNodesInShortestPathOrderAStar} from '../algorithms/Astar';
 import {Nav, Navbar, Button, NavDropdown, Toast} from 'react-bootstrap';
 import Node from '../models/Node/Node';
 import './PathfindingVisualizer.css'; 
@@ -95,6 +96,8 @@ const PathfindingVisualizer = () => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           'node node-visited';
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
       }, 10 * i);
     }
   }
@@ -103,8 +106,14 @@ const PathfindingVisualizer = () => {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-shortest-path';
+        if(node.weight === NODE_WEIGHT){
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
+        }
+        else{
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+        }
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish'; 
       }, 50 * i);
     }
     handlePause();
@@ -126,6 +135,9 @@ const PathfindingVisualizer = () => {
     else if(algorithm == "DFS"){
       visitedNodesInOrder = DFS(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode,startNode);
+    }else if(algorithm == "AStar"){
+      visitedNodesInOrder = AStar(grid, startNode, finishNode);
+      nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(finishNode,startNode);
     }
     else{
       setShow(true);
@@ -141,6 +153,7 @@ const PathfindingVisualizer = () => {
     handleReset();
     setGrid(getInitialGrid());
     setNoOfCellVisited(0);
+    settotalcost(0);
     clearGrid();
     // setAlgorithm("Choose Algorithm");
     // setmazeAlgorithm("Choose Maze Algorithm");
@@ -151,12 +164,14 @@ const PathfindingVisualizer = () => {
   const clearVisualization = () => {
     handleReset();
     setNoOfCellVisited(0);
+    settotalcost(0);
     clearGrid();
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
 
   const demoMazeAlgorithm=()=>{
+    if(mazeAlgorithm === "Choose Maze Algorithm") return;
     clearBoard();
     console.log(mazeAlgorithm);
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -217,6 +232,9 @@ const PathfindingVisualizer = () => {
     setIsAddWeight(!isAddWeight);
   }
 
+  useEffect(() => {
+    demoMazeAlgorithm();
+  },[mazeAlgorithm]);
 
   return (
     <>
@@ -228,23 +246,20 @@ const PathfindingVisualizer = () => {
             <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("BFS")}>BFS</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => setAlgorithm("DFS")}>DFS</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => setAlgorithm("AStar")}>AStar</NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title={mazeAlgorithm} id="basic-nav-dropdown">
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Basic Random Maze");
-              demoMazeAlgorithm();
             }}>Basic Random Maze</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Basic Weight Maze");
-              demoMazeAlgorithm();
             }}>Basic Weight Maze</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Simple Stair Pattern");
-              demoMazeAlgorithm();
             }}>Simple Stair Pattern</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Recursive Division");
-              demoMazeAlgorithm();
             }}>Recursive Division</NavDropdown.Item>
           </NavDropdown>
         </Nav>
@@ -258,6 +273,16 @@ const PathfindingVisualizer = () => {
           }}>
           <Toast.Header>
             <strong className="mr-auto">First Choose Algorithm</strong>
+          </Toast.Header>
+        </Toast>
+        <Toast onClose={() => clearVisualization()} show={totalcost == Infinity} delay={3000} 
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: "50%",
+          }}>
+          <Toast.Header>
+            <strong className="mr-auto">No Path Found</strong>
           </Toast.Header>
         </Toast>
         </div>
@@ -283,7 +308,6 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{noOfCellVisited}</span>
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
-
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
