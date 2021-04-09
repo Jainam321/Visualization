@@ -3,7 +3,7 @@ export default function DFS(grid,startNode, finishNode){
     if(startNode==finishNode || !startNode || !finishNode){
         return false;
     }
-    console.log("in BFS");
+    console.log("in DFS");
     var count=0;
     startNode.distance=0;
     const visited=new Map();
@@ -50,17 +50,17 @@ function creategraph(grid){
     {
         for(let col=0;col<50;col++)
         {
-            if((col+1<50)){
-                graph.addEdge(grid[row][col],grid[row][col+1]);
+            if((row+1)<20){
+                graph.addEdge(grid[row][col],grid[row+1][col]);
             }
             if((col-1>=0)){
                 graph.addEdge(grid[row][col],grid[row][col-1]);
             }
+            if((col+1<50)){
+                graph.addEdge(grid[row][col],grid[row][col+1]);
+            }
             if((row-1)>=0){
                 graph.addEdge(grid[row][col],grid[row-1][col]);
-            }
-            if((row+1)<20){
-                graph.addEdge(grid[row][col],grid[row+1][col]);
             }
         }
     }
@@ -104,9 +104,7 @@ class Graph{
 function updateUnvisitedNeighbors(visitList,node,graph) {
     console.log("neigbour");
     for (const neighbor of visitList) {
-        if(!graph.isAdjacent(node,neighbor) || neighbor.previousNode !== null){
-            continue;
-        }else if(graph.isAdjacent(node,neighbor)){
+        if(graph.isAdjacent(node,neighbor) && neighbor.previousNode === null){
             neighbor.distance = node.distance + neighbor.weight + 1;
             neighbor.previousNode = node;
         }
@@ -119,8 +117,7 @@ export function getNodesInShortestPathOrderDFS(finishNode,startNode) {
     let currentNode = finishNode;
     while (currentNode !== null) {
       nodesInShortestPathOrder.unshift(currentNode);
-      console.log(currentNode.row);
-      console.log(currentNode.col);
+      console.log(currentNode);
       currentNode = currentNode.previousNode;
       if(currentNode===startNode){
           console.log(currentNode.row);
