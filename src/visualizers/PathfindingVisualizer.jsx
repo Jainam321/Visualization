@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  basicRandom from '../mazeAlgorithms/basicRandom.js';
 import  basicWeighted from '../mazeAlgorithms/basicWeighted.js';
 import  Simplestair from '../mazeAlgorithms/Simplestair.js';
+import recursive from '../mazeAlgorithms/recursive.js';
+import Snake from '../mazeAlgorithms/Snakemaze';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -198,6 +200,19 @@ const PathfindingVisualizer = () => {
           setGrid(newGrid);
         }
     }
+    else if(mazeAlgorithm=="Snake Maze")
+    {
+      // recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
+      Snake(grid,startNode,finishNode);
+        var griddef= Snake(grid,startNode,finishNode);
+        for(var i=0;i<griddef.length;i++)
+        {
+          document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-weight';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+          setGrid(newGrid);
+        }
+    }
     else if(mazeAlgorithm=="Simple Stair Pattern")
     {
         var griddef=Simplestair(grid,startNode, finishNode);
@@ -208,6 +223,19 @@ const PathfindingVisualizer = () => {
           const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
           setGrid(newGrid);
         }
+    }
+    else if(mazeAlgorithm=="Recursive Division")
+    {
+      recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
+      // Snake(grid,startNode,finishNode);
+        // var griddef= Snake(grid,startNode,finishNode);
+        // for(var i=0;i<griddef.length;i++)
+        // {
+        //   document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+        //   'node node-weight';
+        //   const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+        //   setGrid(newGrid);
+        // }
     }
   }
 
@@ -258,6 +286,9 @@ const PathfindingVisualizer = () => {
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Simple Stair Pattern");
             }}>Simple Stair Pattern</NavDropdown.Item>
+            <NavDropdown.Item href="" onClick={() => {
+              setmazeAlgorithm("Snake Maze");
+            }}>Snake Maze</NavDropdown.Item>
             <NavDropdown.Item href="" onClick={() => {
               setmazeAlgorithm("Recursive Division");
             }}>Recursive Division</NavDropdown.Item>
