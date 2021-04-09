@@ -11,10 +11,10 @@ import  basicRandom from '../mazeAlgorithms/basicRandom.js';
 import  basicWeighted from '../mazeAlgorithms/basicWeighted.js';
 import  Simplestair from '../mazeAlgorithms/Simplestair.js';
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 10;
-const FINISH_NODE_ROW = 8;
-const FINISH_NODE_COL = 39;
+var START_NODE_ROW = 10;
+var START_NODE_COL = 10;
+var FINISH_NODE_ROW = 8;
+var FINISH_NODE_COL = 39;
 
 const NODE_WEIGHT =10;
 
@@ -30,6 +30,8 @@ const PathfindingVisualizer = () => {
   const [mazeAlgorithm , setmazeAlgorithm ]=useState("Choose Maze Algorithm");
   const [show, setShow] = useState(false);
   const [isAddWeight, setIsAddWeight] = useState(false);
+  const [isStartNode, setIsStartNode] = useState(false);
+  const [isEndNode, setIsEndNode] = useState(false);
   const countRef = useRef(null)
 
 
@@ -67,20 +69,51 @@ const PathfindingVisualizer = () => {
     const grid = getInitialGrid();
     setGrid(grid);
   },[])
-
+  const movestart= (grid, row, col,isStartNode,isEndNode) => {
+    const newGrid = grid.slice();
+    if(isStartNode){
+      newGrid[START_NODE_ROW][START_NODE_COL].isStart=false;
+    }else if(isEndNode){
+      newGrid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish=false;
+    }
+    
+    const node = newGrid[row][col];
+    const newNode = {
+        ...node,
+        isStart: isStartNode,
+        isFinish: isEndNode,
+        isWall:false,
+        weight:0,
+    };
+    newGrid[row][col] = newNode;
+    if(isStartNode){
+      START_NODE_ROW = newNode.row;
+      START_NODE_COL = newNode.col;
+    }else if(isEndNode){
+      FINISH_NODE_ROW = newNode.row;
+      FINISH_NODE_COL = newNode.col;
+    }
+    
+    return newGrid;
+  }
   const handleMouseDown = (row, col) => {
-    const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight);
+    const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight,isStartNode,isEndNode);
     setGrid(newGrid);
     setMouseIsPressed(true);
   }
 
   const handleMouseEnter = (row, col) => {
     if (!mouseIsPressed) return;
-    const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight);
+    var newGrid;
+    if(isStartNode || isEndNode){
+      newGrid=movestart(grid, row, col,isStartNode,isEndNode);
+    }else{
+      newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight,isStartNode,isEndNode);
+    }
     setGrid(newGrid);
   }
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (row,col) => {
     setMouseIsPressed(false);
   }
 
@@ -232,6 +265,12 @@ const PathfindingVisualizer = () => {
     setIsAddWeight(!isAddWeight);
   }
 
+const setStartNode =() => {
+  setIsStartNode(!isStartNode);
+}
+const setEndNode =() => {
+  setIsEndNode(!isEndNode);
+}
   useEffect(() => {
     demoMazeAlgorithm();
   },[mazeAlgorithm]);
@@ -287,6 +326,16 @@ const PathfindingVisualizer = () => {
         </Toast>
         </div>
         <div className="m">
+          <span className="pBtn">
+            <Button variant="success" size="sm" onClick={() => setStartNode()}>
+              {isStartNode ? "Setting StartNode" : "Set StartNode"}
+            </Button>
+          </span>
+          <span className="pBtn">
+            <Button variant="success" size="sm" onClick={() => setEndNode()}>
+              {isEndNode ? "Setting EndNode" : "Set EndNode"}
+            </Button>
+          </span>
           <span className="pBtn">
             <Button variant="success" size="sm" onClick={() => addWeights()}>
               {isAddWeight ? "Adding Weights" : "Add Weights"}
@@ -367,12 +416,12 @@ const createNode = (col, row) => {
     };
 };
 
-const getNewGridWithWallToggled = (grid, row, col, isAddWeight) => {
+const getNewGridWithWallToggled = (grid, row, col, isAddWeight,isStartNode,isEndNode) => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
     const newNode = {
         ...node,
-        isWall: isAddWeight ? false : !node.isWall,
+        isWall: (isAddWeight || isStartNode || isEndNode) ? false : !node.isWall,
         weight: node.weight==0 && isAddWeight ? NODE_WEIGHT : 0,
     };
     newGrid[row][col] = newNode;
