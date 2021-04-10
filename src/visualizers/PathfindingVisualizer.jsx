@@ -385,9 +385,10 @@ const PathfindingVisualizer = () => {
             </span>
             <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
             {showComp ?
-            <div style={{ marginRight: '40px' }}>
-              <Button variant="primary" onClick={() => compareVisualization()}>Add to Comparision</Button>
-            </div> : <span></span>
+            // <div style={{ marginLeft: '450px' }}>
+              <Button variant="primary" onClick={() => compareVisualization()}>Compare</Button>
+            // </div> 
+            : <span></span>
             }
 
           </div>

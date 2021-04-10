@@ -8,7 +8,7 @@ export default function Cards(props) {
           {/* <Card.Text> */}
           <Button variant="light" href="#">
 
-            Chosen Algo: {props.algo} <br/>
+            Chosen Algorithm: {props.algo} <br/>
             Total Cost: {props.tc} <br/>
             No. of cells visited: {props.cells}
             </Button>
