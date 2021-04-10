@@ -3,7 +3,7 @@ export default function BFS(grid,startNode, finishNode){
     if(startNode==finishNode || !startNode || !finishNode){
         return false;
     }
-    console.log("in BFS");
+    // console.log("in BFS");
     var count=0;
     startNode.distance=0;
     const visited=new Map();
@@ -20,11 +20,11 @@ export default function BFS(grid,startNode, finishNode){
             visitedinorder.push(node);
             count++;
             visited.set(node);
-            console.log("visited");
-            console.log(node.row);
-            console.log(node.col);
+            // console.log("visited");
+            // console.log(node.row);
+            // console.log(node.col);
             if(node===finishNode){
-                console.log("count",count);
+                // console.log("count",count);
                 return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
@@ -114,17 +114,17 @@ function updateUnvisitedNeighbors(visitList,node,graph) {
   }
 
 export function getNodesInShortestPathOrderBFS(finishNode,startNode) {
-    console.log("shortest Path");
+    // console.log("shortest Path");
     const nodesInShortestPathOrder = [];
     let currentNode = finishNode;
     while (currentNode !== null) {
       nodesInShortestPathOrder.unshift(currentNode);
-      console.log(currentNode.row);
-      console.log(currentNode.col);
+    //   console.log(currentNode.row);
+    //   console.log(currentNode.col);
       currentNode = currentNode.previousNode;
       if(currentNode===startNode){
-          console.log(currentNode.row);
-          console.log(currentNode.col);
+        //   console.log(currentNode.row);
+        //   console.log(currentNode.col);
           break;
       }
     }
