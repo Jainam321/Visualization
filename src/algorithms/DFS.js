@@ -28,7 +28,7 @@ export default function DFS(grid,startNode, finishNode){
                 return visitedinorder;
             }
             graph.getAdjacents(node).forEach(adj => visitList.push(adj));
-            updateUnvisitedNeighbors(visitList,node,graph);
+            updateUnvisitedNeighbors(visitList,node,graph,visited);
         }
     }
     return visitedinorder;
@@ -101,10 +101,10 @@ class Graph{
 }
 }
 
-function updateUnvisitedNeighbors(visitList,node,graph) {
+function updateUnvisitedNeighbors(visitList,node,graph,visited) {
     console.log("neigbour");
     for (const neighbor of visitList) {
-        if(graph.isAdjacent(node,neighbor) && neighbor.previousNode === null){
+        if(graph.isAdjacent(node,neighbor) && !visited.has(neighbor)){
             neighbor.distance = node.distance + neighbor.weight + 1;
             neighbor.previousNode = node;
         }
