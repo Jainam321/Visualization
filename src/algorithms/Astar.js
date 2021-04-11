@@ -11,8 +11,8 @@ export default function AStar(grid,startnode,endnode){
             if (node.isWall) continue;
             visitedinorder.push(node);
             visited.set(node);
-            console.log(node.row);
-            console.log(node.col);
+            // console.log(node.row);
+            // console.log(node.col);
             if(node==endnode){
                 return visitedinorder;
             }
@@ -101,12 +101,12 @@ export default function AStar(grid,startnode,endnode){
     let currentNode = finishNode;
     while (currentNode !== null) {
       nodesInShortestPathOrder.unshift(currentNode);
-      console.log(currentNode.row);
-      console.log(currentNode.col);
+    //   console.log(currentNode.row);
+    //   console.log(currentNode.col);
       currentNode = currentNode.previousNode;
       if(currentNode===startNode){
-          console.log(currentNode.row);
-          console.log(currentNode.col);
+        //   console.log(currentNode.row);
+        //   console.log(currentNode.col);
           break;
       }
     }

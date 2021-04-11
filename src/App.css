@@ -20,3 +20,16 @@
 .App-link {
   color: #09d3ac;
 }
+
+.Flexbox1 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.Flexbox1 > div {
+  margin: 10px;
+  text-align: center;
+  height:auto;
+}
