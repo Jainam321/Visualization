@@ -207,15 +207,24 @@ const PathfindingVisualizer = () => {
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
 
-  const clearVisualization = () => {
+  const clearVisualization = (grid) => {
     handleReset();
+    setGrid(getPartialGrid());
     setNoOfCellVisited(0);
     settotalcost(0);
     clearGrid();
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
-
+  
+  const getPartialGrid = () => {
+    for (let row = 0; row < 20; row++) {
+      for (let col = 0; col < 50; col++) {
+        grid[row][col].previousNode=null;
+      }
+    }
+    return grid;
+  }
   const demoMazeAlgorithm=()=>{
     if(mazeAlgorithm === "Choose Maze Algorithm") return;
     clearBoard();
@@ -401,7 +410,7 @@ const setEndNode =() => {
             <Button variant="secondary" size="sm" onClick={() => clearBoard()}>Clear Board</Button>
           </span>
           <span className="pBtn">
-            <Button variant="secondary" size="sm" onClick={() => clearVisualization()}>Clear Visualization</Button>
+            <Button variant="secondary" size="sm" onClick={(grid) => clearVisualization(grid)}>Clear Visualization</Button>
           </span>
           <span className="pBtn">
             {showComp ?
