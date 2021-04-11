@@ -363,30 +363,30 @@ const PathfindingVisualizer = () => {
           </div>
           <div className="m">
             <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => setStartNode()}>
+              <Button variant="outline-success" size="sm" onClick={() => setStartNode()}>
                 {isStartNode ? "Setting StartNode" : "Set StartNode"}
               </Button>
             </span>
             <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => setEndNode()}>
+              <Button variant="outline-success" size="sm" onClick={() => setEndNode()}>
                 {isEndNode ? "Setting EndNode" : "Set EndNode"}
               </Button>
             </span>
             <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => addWeights()}>
+              <Button variant="outline-success" size="sm" onClick={() => addWeights()}>
                 {isAddWeight ? "Adding Weights" : "Add Weights"}
               </Button>
             </span>
             <span className="pBtn">
-              <Button variant="secondary" size="sm" onClick={() => clearBoard()}>Clear Board</Button>
+              <Button variant="outline-secondary" size="sm" onClick={() => clearBoard()}>Clear Board</Button>
             </span>
             <span className="pBtn">
-              <Button variant="secondary" size="sm" onClick={() => clearVisualization()}>Clear Visualization</Button>
+              <Button variant="outline-danger" size="sm" onClick={() => clearVisualization()}>Clear Visualization</Button>
             </span>
             <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
             {showComp ?
             // <div style={{ marginLeft: '450px' }}>
-              <Button variant="primary" onClick={() => compareVisualization()}>Compare</Button>
+              <Button variant="outline-primary" onClick={() => compareVisualization()}>Compare</Button>
             // </div> 
             : <span></span>
             }
@@ -407,7 +407,7 @@ const PathfindingVisualizer = () => {
 {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
 {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
 
-{compValues.length != 0 ? (compValues.map((todo, index) =>  <Cards key={index} algo={todo[1]} tc = {todo[2]} cells = {todo[3]}>  </Cards>)) : console.log('else')}
+{compValues.length != 0 ? (compValues.map((todo, index) =>  <Cards key={index} grid1={todo[0]} algo={todo[1]} tc = {todo[2]} cells = {todo[3]}>  </Cards>)) : console.log('else')}
 
       </div>
 
