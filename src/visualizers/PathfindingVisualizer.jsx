@@ -299,7 +299,14 @@ const PathfindingVisualizer = () => {
   }
 
   const compareVisualization = () => {
-    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime];
+    var maze1 = "";
+    if (mazeAlgorithm == "Choose Maze Algorithm") {
+      maze1 = "No algorithm selected";
+    }
+    else {
+      maze1 = mazeAlgorithm;
+    }
+    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1];
     setCompValues([...compValues, listOfValues]);
     console.log(compValues);
 
@@ -439,7 +446,7 @@ const PathfindingVisualizer = () => {
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]}>  </Cards>)) : console.log('else')}
+        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]}>  </Cards>)) : console.log('else')}
       </div>
 
 
