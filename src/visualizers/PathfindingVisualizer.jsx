@@ -12,6 +12,7 @@ import  basicWeighted from '../mazeAlgorithms/basicWeighted.js';
 import  Simplestair from '../mazeAlgorithms/Simplestair.js';
 import recursive from '../mazeAlgorithms/recursive.js';
 import Snake from '../mazeAlgorithms/Snakemaze';
+import Cards from '../components/Card';
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 10;
@@ -31,9 +32,11 @@ const PathfindingVisualizer = () => {
   const [algorithm, setAlgorithm] = useState("Choose Algorithm");
   const [mazeAlgorithm , setmazeAlgorithm ]=useState("Choose Maze Algorithm");
   const [show, setShow] = useState(false);
+  const [showComp, setShowComp] = useState(false);
   const [isAddWeight, setIsAddWeight] = useState(false);
   const [isStartNode, setIsStartNode] = useState(false);
   const [isEndNode, setIsEndNode] = useState(false);
+  const [compValues, setCompValues] = useState([]);
   const countRef = useRef(null)
 
 
@@ -166,17 +169,21 @@ const PathfindingVisualizer = () => {
     if(algorithm == "Dijkstra"){
       visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderDijkstra(finishNode,startNode);
+      setShowComp(true);
     }
     else if(algorithm == "BFS"){
       visitedNodesInOrder = BFS(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode,startNode);
+      setShowComp(true);
     }
     else if(algorithm == "DFS"){
       visitedNodesInOrder = DFS(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode,startNode);
+      setShowComp(true);
     }else if(algorithm == "AStar"){
       visitedNodesInOrder = AStar(grid, startNode, finishNode);
       nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(finishNode,startNode);
+      setShowComp(true);
     }
     else{
       setShow(true);
@@ -277,7 +284,12 @@ const PathfindingVisualizer = () => {
     }
   }
 
-  
+  const compareVisualization = () => { 
+    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited];
+    setCompValues([...compValues, listOfValues]);
+    console.log(compValues);
+
+  }
 
   const clearGrid = () => {
       const newGrid = grid;
@@ -391,6 +403,12 @@ const setEndNode =() => {
           <span className="pBtn">
             <Button variant="secondary" size="sm" onClick={() => clearVisualization()}>Clear Visualization</Button>
           </span>
+          <span className="pBtn">
+            {showComp ?
+                <Button variant="outline-primary" onClick={() => compareVisualization()}>Compare</Button>
+              : <span></span>
+            }
+          </span>
           <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
         </div>
         </div>        
@@ -401,6 +419,17 @@ const setEndNode =() => {
       <span className="timeBox">{noOfCellVisited}</span>
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
+
+      <div className="Flexbox1">
+
+        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
+        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
+
+        {compValues.length != 0 ? (compValues.map((todo, index) =>  <Cards key={index} grid1={todo[0]} algo={todo[1]} tc = {todo[2]} cells = {todo[3]}>  </Cards>)) : console.log('else')}
+      </div>
+
+
+
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
