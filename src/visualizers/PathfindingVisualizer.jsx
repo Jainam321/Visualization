@@ -99,6 +99,9 @@ const PathfindingVisualizer = () => {
     return newGrid;
   }
   const handleMouseDown = (row, col) => {
+    if((row == START_NODE_ROW && col == START_NODE_COL) || (row == FINISH_NODE_ROW && col == FINISH_NODE_COL)){
+      return;
+    }
     const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight,isStartNode,isEndNode);
     setGrid(newGrid);
     setMouseIsPressed(true);
@@ -109,10 +112,11 @@ const PathfindingVisualizer = () => {
     var newGrid;
     if(isStartNode || isEndNode){
       newGrid=movestart(grid, row, col,isStartNode,isEndNode);
-    }else{
+      setGrid(newGrid);
+    }else if(!((row == START_NODE_ROW && col == START_NODE_COL) || (row == FINISH_NODE_ROW && col == FINISH_NODE_COL))){
       newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight,isStartNode,isEndNode);
-    }
-    setGrid(newGrid);
+      setGrid(newGrid);
+    }    
   }
 
   const handleMouseUp = (row,col) => {
@@ -295,10 +299,18 @@ const PathfindingVisualizer = () => {
   }
 
 const setStartNode =() => {
-  setIsStartNode(!isStartNode);
+  if(!isEndNode){
+    setIsStartNode(!isStartNode);
+  }else{
+    setShow(true);
+  }
 }
 const setEndNode =() => {
-  setIsEndNode(!isEndNode);
+  if(!isStartNode){
+    setIsEndNode(!isEndNode);
+  }else{
+    setShow(true);
+  }  
 }
   useEffect(() => {
     demoMazeAlgorithm();
@@ -343,7 +355,7 @@ const setEndNode =() => {
             right: "50%",
           }}>
           <Toast.Header>
-            <strong className="mr-auto">First Choose Algorithm</strong>
+            {isStartNode ? <strong className="mr-auto">First Set StartNode</strong> : (isEndNode ? <strong className="mr-auto">First set Endnode</strong> : <strong className="mr-auto">First Choose Algorithm</strong>)}
           </Toast.Header>
         </Toast>
         <Toast onClose={() => clearVisualization()} show={totalcost == Infinity} delay={3000} 
@@ -459,6 +471,4 @@ const getNewGridWithWallToggled = (grid, row, col, isAddWeight,isStartNode,isEnd
     newGrid[row][col] = newNode;
     return newGrid;
 };
-  
-
 export default PathfindingVisualizer;
