@@ -103,7 +103,6 @@ const PathfindingVisualizer = () => {
     return newGrid;
   }
   const handleMouseDown = (row, col) => {
-<<<<<<< HEAD
     if(row == START_NODE_ROW && col == START_NODE_COL){
       setMouseIsPressed(true);
       setIsStartNode(true);
@@ -111,10 +110,6 @@ const PathfindingVisualizer = () => {
     }else if(row == FINISH_NODE_ROW && col == FINISH_NODE_COL){
       setMouseIsPressed(true);
       setIsEndNode(true);
-=======
-    if ((row == START_NODE_ROW && col == START_NODE_COL) || (row == FINISH_NODE_ROW && col == FINISH_NODE_COL)) {
-      setMouseIsPressed(true);
->>>>>>> 1bcc723f6810927e7c027ed59a1e20494f51deec
       return;
     }
     const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight, isStartNode, isEndNode);
