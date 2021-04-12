@@ -103,6 +103,7 @@ const PathfindingVisualizer = () => {
     return newGrid;
   }
   const handleMouseDown = (row, col) => {
+<<<<<<< HEAD
     if(row == START_NODE_ROW && col == START_NODE_COL){
       setMouseIsPressed(true);
       setIsStartNode(true);
@@ -110,6 +111,10 @@ const PathfindingVisualizer = () => {
     }else if(row == FINISH_NODE_ROW && col == FINISH_NODE_COL){
       setMouseIsPressed(true);
       setIsEndNode(true);
+=======
+    if ((row == START_NODE_ROW && col == START_NODE_COL) || (row == FINISH_NODE_ROW && col == FINISH_NODE_COL)) {
+      setMouseIsPressed(true);
+>>>>>>> 1bcc723f6810927e7c027ed59a1e20494f51deec
       return;
     }
     const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight, isStartNode, isEndNode);
@@ -407,13 +412,20 @@ const PathfindingVisualizer = () => {
             <span className="pBtn">
               <Button variant="secondary" size="sm" onClick={(grid) => clearVisualization(grid)}>Clear Visualization</Button>
             </span>
+            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
+            <br />
             <span className="pBtn">
               {showComp ?
                 <Button variant="outline-primary" onClick={() => compareVisualization()}>Compare</Button>
                 : <span></span>
               }
             </span>
-            <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
+            <span className="pBtn">
+              {showComp ?
+                <Button variant="outline-primary" onClick={() => setCompValues([])}>Clear Comparison</Button>
+                : <span></span>
+              }
+            </span>
           </div>
         </div>
       </Navbar>
