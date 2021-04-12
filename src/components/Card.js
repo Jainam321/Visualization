@@ -6,8 +6,8 @@ export default function Cards(props) {
     // <Card border="light" style={{ width: '15rem' }}>
     <Card border="light" style={{ width: 'fit-content' }}>
       <Button variant="outline-secondary" href="https://www.youtube.com/" >
-        Chosen Algorithm: {props.algo} <br />
-        Chosen Maze Algorithm: {props.maze1} <br />
+        Algorithm: {props.algo} <br />
+        Maze Pattern: {props.maze1} <br />
         No. of cells visited: {props.cells} <br />
         Total Cost: {props.tc} <br />
         Time taken for {props.algo} : {props.time1} ms

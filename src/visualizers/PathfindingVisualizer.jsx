@@ -103,11 +103,11 @@ const PathfindingVisualizer = () => {
     return newGrid;
   }
   const handleMouseDown = (row, col) => {
-    if(row == START_NODE_ROW && col == START_NODE_COL){
+    if (row == START_NODE_ROW && col == START_NODE_COL) {
       setMouseIsPressed(true);
       setIsStartNode(true);
       return;
-    }else if(row == FINISH_NODE_ROW && col == FINISH_NODE_COL){
+    } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
       setMouseIsPressed(true);
       setIsEndNode(true);
       return;
@@ -408,8 +408,8 @@ const PathfindingVisualizer = () => {
               <Button variant="secondary" size="sm" onClick={(grid) => clearVisualization(grid)}>Clear Visualization</Button>
             </span>
             <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
-            <br />
-            <span className="pBtn">
+
+            <span className="pBtn" style={{ marginLeft: '10px' }}>
               {showComp ?
                 <Button variant="outline-primary" onClick={() => compareVisualization()}>Compare</Button>
                 : <span></span>
@@ -417,7 +417,7 @@ const PathfindingVisualizer = () => {
             </span>
             <span className="pBtn">
               {showComp ?
-                <Button variant="outline-primary" onClick={() => setCompValues([])}>Clear Comparison</Button>
+                <Button variant="outline-danger" onClick={() => setCompValues([])}>Clear Comparison</Button>
                 : <span></span>
               }
             </span>
