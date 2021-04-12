@@ -103,9 +103,15 @@ const PathfindingVisualizer = () => {
     return newGrid;
   }
   const handleMouseDown = (row, col) => {
-    // if((row == START_NODE_ROW && col == START_NODE_COL) || (row == FINISH_NODE_ROW && col == FINISH_NODE_COL)){
-    //   return;
-    // }
+    if(row == START_NODE_ROW && col == START_NODE_COL){
+      setMouseIsPressed(true);
+      setIsStartNode(true);
+      return;
+    }else if(row == FINISH_NODE_ROW && col == FINISH_NODE_COL){
+      setMouseIsPressed(true);
+      setIsEndNode(true);
+      return;
+    }
     const newGrid = getNewGridWithWallToggled(grid, row, col, isAddWeight, isStartNode, isEndNode);
     setGrid(newGrid);
     setMouseIsPressed(true);
@@ -125,6 +131,8 @@ const PathfindingVisualizer = () => {
 
   const handleMouseUp = (row, col) => {
     setMouseIsPressed(false);
+    setIsStartNode(false);
+    setIsEndNode(false);
   }
 
   const animateAlgorithm = (visitedNodesInOrder, nodesInShortestPathOrder) => {
@@ -330,21 +338,6 @@ const PathfindingVisualizer = () => {
   const addWeights = () => {
     setIsAddWeight(!isAddWeight);
   }
-
-  const setStartNode = () => {
-    if (!isEndNode) {
-      setIsStartNode(!isStartNode);
-    } else {
-      setShow(true);
-    }
-  }
-  const setEndNode = () => {
-    if (!isStartNode) {
-      setIsEndNode(!isEndNode);
-    } else {
-      setShow(true);
-    }
-  }
   useEffect(() => {
     demoMazeAlgorithm();
   }, [mazeAlgorithm]);
@@ -388,7 +381,7 @@ const PathfindingVisualizer = () => {
                 right: "50%",
               }}>
               <Toast.Header>
-                {isStartNode ? <strong className="mr-auto">First Set StartNode</strong> : (isEndNode ? <strong className="mr-auto">First set Endnode</strong> : <strong className="mr-auto">First Choose Algorithm</strong>)}
+                <strong className="mr-auto">First Choose Algorithm</strong>
               </Toast.Header>
             </Toast>
             <Toast onClose={() => clearVisualization()} show={totalcost == Infinity} delay={3000}
@@ -403,16 +396,6 @@ const PathfindingVisualizer = () => {
             </Toast>
           </div>
           <div className="m">
-            <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => setStartNode()}>
-                {isStartNode ? "Setting StartNode" : "Set StartNode"}
-              </Button>
-            </span>
-            <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => setEndNode()}>
-                {isEndNode ? "Setting EndNode" : "Set EndNode"}
-              </Button>
-            </span>
             <span className="pBtn">
               <Button variant="success" size="sm" onClick={() => addWeights()}>
                 {isAddWeight ? "Adding Weights" : "Add Weights"}
