@@ -38,6 +38,8 @@ const PathfindingVisualizer = () => {
   const [isEndNode, setIsEndNode] = useState(false);
   const [compValues, setCompValues] = useState([]);
   const [algoRunTime, setAlgoRunTime] = useState(0);
+  const [totalNodes, setTotalNodes] = useState(0);
+
   const countRef = useRef(null)
 
 
@@ -201,7 +203,9 @@ const PathfindingVisualizer = () => {
       // var start = new Date().getTime();
       // console.log("Start: ", start)
       visitedNodesInOrder = AStar(grid, startNode, finishNode);
+      // console.log(visitedNodesInOrder.length);
       nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(finishNode, startNode);
+      // console.log(nodesInShortestPathOrder.length);
       var start2 = new Date().getTime();
       setAlgoRunTime(start2 - start);
       setShowComp(true);
@@ -211,6 +215,10 @@ const PathfindingVisualizer = () => {
       handlePause();
       return;
     }
+    console.log(visitedNodesInOrder.length);
+    console.log(nodesInShortestPathOrder.length);
+    setTotalNodes(visitedNodesInOrder.length);
+
 
     settotalcost(finishNode.distance);
     animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
@@ -314,7 +322,7 @@ const PathfindingVisualizer = () => {
     else {
       maze1 = mazeAlgorithm;
     }
-    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1];
+    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes];
     setCompValues([...compValues, listOfValues]);
     console.log(compValues);
 
@@ -436,7 +444,7 @@ const PathfindingVisualizer = () => {
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]}>  </Cards>)) : console.log('else')}
+        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}>  </Cards>)) : console.log('else')}
       </div>
 
 
