@@ -31,7 +31,24 @@ function basicRandom(grid, startNode, finishNode) {
                else if (col == finishNode.col && row == finishNode.row) {
                     continue;
                }
+               if(grid1.length>1){
+               var count=0;
+               for(var k=0;k<grid1.length;k++)
+               {
+                    if(grid[k]==grid[col][row])
+                    {
+                         count=1;
+                    }
+               }
+               if(count==0)
+               {
+                    grid1.push(grid[col][row]);
+               }
+               }
+               else
+               {
                grid1.push(grid[col][row]);
+               }
           }
      }
      return grid1;

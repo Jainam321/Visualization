@@ -205,9 +205,23 @@ const PathfindingVisualizer = () => {
     return grid;
   }
 
+  const clearGrid = () => {
+    const newGrid = grid;
+    for (const row of newGrid) {
+      for (const node of row) {
+        let nodeClassName = document.getElementById(`node-${node.row}-${node.col}`,).className;
+        if (nodeClassName !== 'node node-start' &&
+          nodeClassName !== 'node node-finish' &&
+          nodeClassName !== 'node node-wall') {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+            'node';
+        }
+      }
+    }
+  }
+
   const visualizeAlgorithm = () => {
     clearVisualization();
-    console.log("clear Visulization");
     handleStart();
     var start = new Date().getTime();
     // console.log("Start: ", start)
@@ -263,7 +277,6 @@ const PathfindingVisualizer = () => {
   const demoMazeAlgorithm = () => {
     if (mazeAlgorithm === "Choose Maze Algorithm") return;
     clearBoard();
-    clearGrid();
     console.log(mazeAlgorithm);
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -306,16 +319,14 @@ const PathfindingVisualizer = () => {
       }
     }
     else if (mazeAlgorithm == "Recursive Division") {
-      // recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
-      // Snake(grid,startNode,finishNode);
-      // var griddef= Snake(grid,startNode,finishNode);
-      // for(var i=0;i<griddef.length;i++)
-      // {
-      //   document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-      //   'node node-weight';
-      //   const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
-      //   setGrid(newGrid);
-      // }
+      var griddef= recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
+      for(var i=0;i<griddef.length;i++)
+      {
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+        'node node-weight';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+        setGrid(newGrid);
+      }
     }
   }
 
@@ -331,21 +342,6 @@ const PathfindingVisualizer = () => {
     setCompValues([...compValues, listOfValues]);
     console.log(compValues);
 
-  }
-
-  const clearGrid = () => {
-    const newGrid = grid;
-    for (const row of newGrid) {
-      for (const node of row) {
-        let nodeClassName = document.getElementById(`node-${node.row}-${node.col}`,).className;
-        if (nodeClassName !== 'node node-start' &&
-          nodeClassName !== 'node node-finish' &&
-          nodeClassName !== 'node node-wall') {
-          document.getElementById(`node-${node.row}-${node.col}`).className =
-            'node';
-        }
-      }
-    }
   }
 
   const addWeights = () => {
@@ -424,13 +420,13 @@ const PathfindingVisualizer = () => {
 
             <span className="pBtn" style={{ marginLeft: '10px' }}>
               {showComp ?
-                <Button variant="outline-primary" onClick={() => compareVisualization()}>Compare</Button>
+                <Button variant="primary" onClick={() => compareVisualization()}>Compare</Button>
                 : <span></span>
               }
             </span>
             <span className="pBtn">
               {showComp ?
-                <Button variant="outline-danger" onClick={() => setCompValues([])}>Clear Comparison</Button>
+                <Button variant="danger" onClick={() => setCompValues([])}>Clear Comparison</Button>
                 : <span></span>
               }
             </span>
@@ -443,6 +439,9 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{noOfCellVisited}</span>
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
+
+
+
 
       <div className="Flexbox1">
 

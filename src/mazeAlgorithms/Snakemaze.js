@@ -2,7 +2,7 @@ function Snake(grid, startNode, finishNode) {
     let grid1 = []
     let nrequired = []
     for (let k = 1; k < 10; k++) {
-        for (let j = 1; j < 20; j++) {
+        for (let j = 1; j < 15; j++) {
             let x = Math.floor((Math.random() * 50) + 1);
             nrequired.push(grid[j][x]);
         }
@@ -40,13 +40,13 @@ function Snake(grid, startNode, finishNode) {
             }
         }
     }
-    for (var i = 1; i < 19; i += 2) {
-        for (var j = 35; j < 50; j += 2) {
+    for (var i = 1; i < 20; i += 2) {
+        for (var j = 50; j < 50; j += 2) {
             if (grid[i][j] == startNode || grid[i][j] == finishNode) {
                 continue;
             }
             else {
-                grid1.push(grid[i][j - i]);
+                grid1.push(grid[i][j - i -1]);
             }
         }
     }
