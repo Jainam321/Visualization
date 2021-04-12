@@ -172,7 +172,42 @@ const PathfindingVisualizer = () => {
     handlePause();
   }
 
+  
+
+  const clearBoard = () => {
+    handleReset();
+    setGrid(getInitialGrid());
+    setNoOfCellVisited(0);
+    settotalcost(0);
+    clearGrid();
+    // setAlgorithm("Choose Algorithm");
+    // setmazeAlgorithm("Choose Maze Algorithm");
+    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+  }
+
+  const clearVisualization = (grid) => {
+    handleReset();
+    setGrid(getPartialGrid());
+    setNoOfCellVisited(0);
+    settotalcost(0);
+    clearGrid();
+    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+  }
+
+  const getPartialGrid = () => {
+    for (let row = 0; row < 20; row++) {
+      for (let col = 0; col < 50; col++) {
+        grid[row][col].previousNode = null;
+      }
+    }
+    return grid;
+  }
+
   const visualizeAlgorithm = () => {
+    clearVisualization();
+    console.log("clear Visulization");
     handleStart();
     var start = new Date().getTime();
     // console.log("Start: ", start)
@@ -225,36 +260,6 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(nodesInShortestPathOrder.length);
   }
 
-  const clearBoard = () => {
-    handleReset();
-    setGrid(getInitialGrid());
-    setNoOfCellVisited(0);
-    settotalcost(0);
-    clearGrid();
-    // setAlgorithm("Choose Algorithm");
-    // setmazeAlgorithm("Choose Maze Algorithm");
-    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
-  }
-
-  const clearVisualization = (grid) => {
-    handleReset();
-    setGrid(getPartialGrid());
-    setNoOfCellVisited(0);
-    settotalcost(0);
-    clearGrid();
-    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
-  }
-
-  const getPartialGrid = () => {
-    for (let row = 0; row < 20; row++) {
-      for (let col = 0; col < 50; col++) {
-        grid[row][col].previousNode = null;
-      }
-    }
-    return grid;
-  }
   const demoMazeAlgorithm = () => {
     if (mazeAlgorithm === "Choose Maze Algorithm") return;
     clearBoard();
