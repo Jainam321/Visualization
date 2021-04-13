@@ -12,7 +12,7 @@ export default function Cards(props) {
         Total cells visited: {props.total1} <br />
         No. of cells in shortest path: {props.cells} <br />
         Total Cost: {props.tc} <br />
-        Time taken for {props.algo} : {props.time1} ms       
+        Time taken for {props.algo} : {props.time1} ms
       </Button>
     </Card>
   )

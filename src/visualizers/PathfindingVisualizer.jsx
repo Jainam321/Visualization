@@ -345,8 +345,8 @@ const PathfindingVisualizer = () => {
   }
 
   const deleteComparison = (index) => {
-    const newList = Object.assign([],compValues);
-    newList.splice(index,1);
+    const newList = Object.assign([], compValues);
+    newList.splice(index, 1);
     setCompValues(newList);
     // console(newList);
     // console.log(compValues.splice(index,1));
@@ -452,11 +452,7 @@ const PathfindingVisualizer = () => {
 
       <div className="Flexbox1">
 
-        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
-        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
-
         {compValues.length != 0 ? (compValues.map((todo, index) => <div><Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}  >  </Cards> <Button variant="outline-danger" onClick={() => deleteComparison(index)}>Remove</Button></div>)) : console.log('else')}
-        {/* {compValues.length != 0 ? (compValues.map((todo, index) => <Button onClick={() => deleteComparison(index)}>Sourabh</Button>)) : console.log('else')} */}
 
       </div>
 
