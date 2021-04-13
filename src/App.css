@@ -21,6 +21,8 @@
   color: #09d3ac;
 }
 
+
+
 .Flexbox1 {
   display: flex;
   flex-wrap: wrap;
@@ -30,7 +32,5 @@
 }
 .Flexbox1 > div {
   margin: 10px;
-  text-align: center;
-  height:auto;
-  width: fit-content;
+  /* height:auto; */
 }

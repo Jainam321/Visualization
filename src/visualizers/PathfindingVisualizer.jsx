@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Carousel } from 'react-bootstrap';
 import dijkstra, { getNodesInShortestPathOrderDijkstra } from '../algorithms/dijkstra';
 import BFS, { getNodesInShortestPathOrderBFS } from '../algorithms/BFS';
 import DFS, { getNodesInShortestPathOrderDFS } from '../algorithms/DFS';
@@ -172,7 +173,7 @@ const PathfindingVisualizer = () => {
     handlePause();
   }
 
-  
+
 
   const clearBoard = () => {
     handleReset();
@@ -264,8 +265,8 @@ const PathfindingVisualizer = () => {
       handlePause();
       return;
     }
-    console.log(visitedNodesInOrder.length);
-    console.log(nodesInShortestPathOrder.length);
+    // console.log(visitedNodesInOrder.length);
+    // console.log(nodesInShortestPathOrder.length);
     setTotalNodes(visitedNodesInOrder.length);
 
 
@@ -319,11 +320,10 @@ const PathfindingVisualizer = () => {
       }
     }
     else if (mazeAlgorithm == "Recursive Division") {
-      var griddef= recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
-      for(var i=0;i<griddef.length;i++)
-      {
+      var griddef = recursive(grid, 0, grid.length - 1, 0, grid.length - 1, startNode, finishNode);
+      for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-        'node node-weight';
+          'node node-weight';
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
         setGrid(newGrid);
       }
@@ -342,6 +342,14 @@ const PathfindingVisualizer = () => {
     setCompValues([...compValues, listOfValues]);
     console.log(compValues);
 
+  }
+
+  const deleteComparison = (index) => {
+    const newList = Object.assign([],compValues);
+    newList.splice(index,1);
+    setCompValues(newList);
+    // console(newList);
+    // console.log(compValues.splice(index,1));
   }
 
   const addWeights = () => {
@@ -430,6 +438,7 @@ const PathfindingVisualizer = () => {
                 : <span></span>
               }
             </span>
+            {/* <Button variant="danger" onClick={() => deleteComparison(compValues.length - 1)}> {console.log(compValues.length - 1)} Clear1 Comparison</Button> */}
           </div>
         </div>
       </Navbar>
@@ -441,17 +450,15 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{totalcost}</span>
 
 
-
-
       <div className="Flexbox1">
 
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
         {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}>  </Cards>)) : console.log('else')}
+        {compValues.length != 0 ? (compValues.map((todo, index) => <div><Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}  >  </Cards> <Button variant="outline-danger" onClick={() => deleteComparison(index)}>Remove</Button></div>)) : console.log('else')}
+        {/* {compValues.length != 0 ? (compValues.map((todo, index) => <Button onClick={() => deleteComparison(index)}>Sourabh</Button>)) : console.log('else')} */}
+
       </div>
-
-
 
       <div className="grid">
         {grid.map((row, rowIdx) => {
