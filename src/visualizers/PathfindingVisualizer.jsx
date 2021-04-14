@@ -333,15 +333,14 @@ const PathfindingVisualizer = () => {
   const compareVisualization = () => {
     var maze1 = "";
     if (mazeAlgorithm == "Choose Maze Algorithm") {
-      maze1 = "No algorithm selected";
+      maze1 = "Not selected";
     }
     else {
       maze1 = mazeAlgorithm;
     }
     const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes];
     setCompValues([...compValues, listOfValues]);
-    console.log(compValues);
-
+    console.log("PathVisualizer:", compValues);
   }
 
   const deleteComparison = (index) => {
@@ -442,6 +441,8 @@ const PathfindingVisualizer = () => {
           </div>
         </div>
       </Navbar>
+      <span className="pText">{algorithm} Runtime</span>
+      <span className="timeBox">{algoRunTime} ms</span>
       <span className="pText">Timer</span>
       <span className="timeBox">{formatTime()}</span>
       <span className="pText">No. of Cells Visited</span>
