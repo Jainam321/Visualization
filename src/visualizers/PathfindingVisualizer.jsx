@@ -41,6 +41,9 @@ const PathfindingVisualizer = () => {
   const [algoRunTime, setAlgoRunTime] = useState(0);
   const [totalNodes, setTotalNodes] = useState(0);
 
+  const [l1, setL1] = useState([]);
+  const [l2, setL2] = useState([]);
+
   const countRef = useRef(null)
 
 
@@ -268,7 +271,8 @@ const PathfindingVisualizer = () => {
     // console.log(visitedNodesInOrder.length);
     // console.log(nodesInShortestPathOrder.length);
     setTotalNodes(visitedNodesInOrder.length);
-
+    setL1(visitedNodesInOrder);
+    setL2(nodesInShortestPathOrder);
 
     settotalcost(finishNode.distance);
     animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
@@ -338,7 +342,7 @@ const PathfindingVisualizer = () => {
     else {
       maze1 = mazeAlgorithm;
     }
-    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes];
+    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes, l1, l2];
     setCompValues([...compValues, listOfValues]);
     console.log("PathVisualizer:", compValues);
   }
@@ -349,6 +353,31 @@ const PathfindingVisualizer = () => {
     setCompValues(newList);
     // console(newList);
     // console.log(compValues.splice(index,1));
+  }
+
+  const showFinalStateOfAlgo = (index) => {
+    clearVisualization();
+    for (let i = 0; i <= compValues[index][7].length; i++) {
+      if (i === compValues[index][7].length) {
+        for (let i = 0; i < compValues[index][8].length; i++) {
+          const node = compValues[index][8][i];
+            if (node.weight === NODE_WEIGHT) {
+              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
+            }
+            else {
+              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+            }
+            document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+            document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+        }
+        return;
+      }
+      const node = compValues[index][7][i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-visited';
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+    }
   }
 
   const addWeights = () => {
@@ -453,7 +482,13 @@ const PathfindingVisualizer = () => {
 
       <div className="Flexbox1">
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <div><Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}  >  </Cards> <Button variant="outline-danger" onClick={() => deleteComparison(index)}>Remove</Button></div>)) : console.log('else')}
+        {compValues.length != 0 ? (compValues.map((todo, index) => <div onClick={() => showFinalStateOfAlgo(index)}>
+          <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]} >  
+          </Cards>
+          <Button variant="outline-danger" onClick={() => deleteComparison(index)}>
+            Remove
+          </Button>
+        </div>)) : console.log('else')}
 
       </div>
 
