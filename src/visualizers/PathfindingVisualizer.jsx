@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Carousel } from 'react-bootstrap';
 import dijkstra, { getNodesInShortestPathOrderDijkstra } from '../algorithms/dijkstra';
 import BFS, { getNodesInShortestPathOrderBFS } from '../algorithms/BFS';
 import DFS, { getNodesInShortestPathOrderDFS } from '../algorithms/DFS';
@@ -39,6 +40,9 @@ const PathfindingVisualizer = () => {
   const [compValues, setCompValues] = useState([]);
   const [algoRunTime, setAlgoRunTime] = useState(0);
   const [totalNodes, setTotalNodes] = useState(0);
+
+  const [l1, setL1] = useState([]);
+  const [l2, setL2] = useState([]);
 
   const countRef = useRef(null)
 
@@ -172,7 +176,7 @@ const PathfindingVisualizer = () => {
     handlePause();
   }
 
-  
+
 
   const clearBoard = () => {
     handleReset();
@@ -264,10 +268,11 @@ const PathfindingVisualizer = () => {
       handlePause();
       return;
     }
-    console.log(visitedNodesInOrder.length);
-    console.log(nodesInShortestPathOrder.length);
+    // console.log(visitedNodesInOrder.length);
+    // console.log(nodesInShortestPathOrder.length);
     setTotalNodes(visitedNodesInOrder.length);
-
+    setL1(visitedNodesInOrder);
+    setL2(nodesInShortestPathOrder);
 
     settotalcost(finishNode.distance);
     animateAlgorithm(visitedNodesInOrder, nodesInShortestPathOrder);
@@ -326,7 +331,7 @@ const PathfindingVisualizer = () => {
       for(var i=0;i<griddef.length;i++)
       {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-        'node node-weight';
+          'node node-weight';
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
         setGrid(newGrid);
       }
@@ -336,15 +341,47 @@ const PathfindingVisualizer = () => {
   const compareVisualization = () => {
     var maze1 = "";
     if (mazeAlgorithm == "Choose Maze Algorithm") {
-      maze1 = "No algorithm selected";
+      maze1 = "Not selected";
     }
     else {
       maze1 = mazeAlgorithm;
     }
-    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes];
+    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes, l1, l2];
     setCompValues([...compValues, listOfValues]);
-    console.log(compValues);
+    console.log("PathVisualizer:", compValues);
+  }
 
+  const deleteComparison = (index) => {
+    const newList = Object.assign([], compValues);
+    newList.splice(index, 1);
+    setCompValues(newList);
+    // console(newList);
+    // console.log(compValues.splice(index,1));
+  }
+
+  const showFinalStateOfAlgo = (index) => {
+    clearVisualization();
+    for (let i = 0; i <= compValues[index][7].length; i++) {
+      if (i === compValues[index][7].length) {
+        for (let i = 0; i < compValues[index][8].length; i++) {
+          const node = compValues[index][8][i];
+            if (node.weight === NODE_WEIGHT) {
+              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
+            }
+            else {
+              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+            }
+            document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+            document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+        }
+        return;
+      }
+      const node = compValues[index][7][i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          'node node-visited';
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+    }
   }
 
   const addWeights = () => {
@@ -433,9 +470,12 @@ const PathfindingVisualizer = () => {
                 : <span></span>
               }
             </span>
+            {/* <Button variant="danger" onClick={() => deleteComparison(compValues.length - 1)}> {console.log(compValues.length - 1)} Clear1 Comparison</Button> */}
           </div>
         </div>
       </Navbar>
+      <span className="pText">{algorithm} Runtime</span>
+      <span className="timeBox">{algoRunTime} ms</span>
       <span className="pText">Timer</span>
       <span className="timeBox">{formatTime()}</span>
       <span className="pText">No. of Cells Visited</span>
@@ -444,17 +484,17 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{totalcost}</span>
 
 
-
-
       <div className="Flexbox1">
 
-        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li key={index}>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
-        {/* <ul>{compValues.length != 0 ? (compValues.map((todo, index) =>  <li>    {todo[1]} {todo[2]} {todo[3]} </li>)) : console.log('else')}</ul> */}
+        {compValues.length != 0 ? (compValues.map((todo, index) => <div onClick={() => showFinalStateOfAlgo(index)}>
+          <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]} >  
+          </Cards>
+          <Button variant="outline-danger" onClick={() => deleteComparison(index)}>
+            Remove
+          </Button>
+        </div>)) : console.log('else')}
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]}>  </Cards>)) : console.log('else')}
       </div>
-
-
 
       <div className="grid">
         {grid.map((row, rowIdx) => {
