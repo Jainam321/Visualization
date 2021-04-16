@@ -319,7 +319,10 @@ const PathfindingVisualizer = () => {
       }
     }
     else if (mazeAlgorithm == "Recursive Division") {
-      var griddef= recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
+      var count2=0;
+      let list1=[];
+      var orientation="horizontal";
+      var griddef= recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode,count2,list1,orientation);
       for(var i=0;i<griddef.length;i++)
       {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
