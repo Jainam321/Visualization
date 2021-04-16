@@ -186,6 +186,9 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(0);
     settotalcost(0);
     clearGrid();
+    setCompValues([]);
+    setAlgoRunTime(0);
+    // clea();
     // setAlgorithm("Choose Algorithm");
     // setmazeAlgorithm("Choose Maze Algorithm");
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
@@ -198,6 +201,7 @@ const PathfindingVisualizer = () => {
     setNoOfCellVisited(0);
     settotalcost(0);
     clearGrid();
+    setAlgoRunTime(0);
     document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
     document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
   }
@@ -368,7 +372,8 @@ const PathfindingVisualizer = () => {
     else {
       maze1 = mazeAlgorithm;
     }
-    const listOfValues = [grid, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes, l1, l2];
+    const startEndVertices = [START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL]
+    const listOfValues = [startEndVertices, algorithm, totalcost, noOfCellVisited, algoRunTime, maze1, totalNodes, l1, l2];
     setCompValues([...compValues, listOfValues]);
     console.log("PathVisualizer:", compValues);
   }
@@ -382,7 +387,16 @@ const PathfindingVisualizer = () => {
   }
 
   const showFinalStateOfAlgo = (index) => {
-    clearVisualization();
+    START_NODE_ROW = compValues[index][0][0];
+    START_NODE_COL = compValues[index][0][1];
+    FINISH_NODE_ROW = compValues[index][0][2];
+    FINISH_NODE_COL = compValues[index][0][3];
+    const newGrid = grid;
+    for (const row of newGrid) {
+      for (const node of row) {
+        document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
+      }
+    }
     for (let i = 0; i <= compValues[index][7].length; i++) {
       if (i === compValues[index][7].length) {
         for (let i = 0; i < compValues[index][8].length; i++) {
@@ -474,7 +488,7 @@ const PathfindingVisualizer = () => {
           </div>
           <div className="m">
             <span className="pBtn">
-              <Button variant="success" size="sm" onClick={() => addWeights()}>
+              <Button variant={isAddWeight ? "danger" : "success"} size="sm" onClick={() => addWeights()}>
                 {isAddWeight ? "Adding Weights" : "Add Weights"}
               </Button>
             </span>
@@ -486,7 +500,7 @@ const PathfindingVisualizer = () => {
             </span>
             <Button variant="primary" onClick={() => visualizeAlgorithm()}>Start</Button>
 
-            <span className="pBtn" style={{ marginLeft: '10px' }}>
+            {/* <span className="pBtn" style={{ marginLeft: '10px' }}>
               {showComp ?
                 <Button variant="primary" onClick={() => compareVisualization()}>Compare</Button>
                 : <span></span>
@@ -497,7 +511,7 @@ const PathfindingVisualizer = () => {
                 <Button variant="danger" onClick={() => setCompValues([])}>Clear Comparison</Button>
                 : <span></span>
               }
-            </span>
+            </span> */}
             {/* <Button variant="danger" onClick={() => deleteComparison(compValues.length - 1)}> {console.log(compValues.length - 1)} Clear1 Comparison</Button> */}
           </div>
         </div>
@@ -510,12 +524,22 @@ const PathfindingVisualizer = () => {
       <span className="timeBox">{noOfCellVisited}</span>
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
-
-
+      <span className="pBtn" style={{ marginLeft: '10px' }}>
+              {showComp ?
+                <Button variant="info" size="sm" onClick={() => compareVisualization()}>Add to Compare</Button>
+                : <span></span>
+              }
+            </span>
+            <span className="pBtn">
+              {showComp ?
+                <Button variant="danger" size="sm" onClick={() => setCompValues([])}>Clear Comparison</Button>
+                : <span></span>
+              }
+            </span>
       <div className="Flexbox1">
 
-        {compValues.length != 0 ? (compValues.map((todo, index) => <div onClick={() => showFinalStateOfAlgo(index)}>
-          <Cards key={index} grid1={todo[0]} algo={todo[1]} tc={todo[2]} cells={todo[3]} time1={todo[4]} maze1={todo[5]} total1={todo[6]} >  
+        {compValues.length != 0 ? (compValues.map((vis, index) => <div onClick={() => showFinalStateOfAlgo(index)}>
+          <Cards key={index} algo={vis[1]} tc={vis[2]} cells={vis[3]} time1={vis[4]} maze1={vis[5]} total1={vis[6]} >  
           </Cards>
           <Button variant="outline-danger" onClick={() => deleteComparison(index)}>
             Remove
