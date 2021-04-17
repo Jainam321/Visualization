@@ -307,7 +307,7 @@ const PathfindingVisualizer = () => {
       for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-weight';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col,isAddWeight);
         setGrid(newGrid);
       }
     }
@@ -380,25 +380,14 @@ const PathfindingVisualizer = () => {
     else if (mazeAlgorithm == "Chance Maze Vertical") {
       var griddef =chanceMazeV(grid, 0, grid.length-1, 0 , grid[0].length-1, startNode, finishNode);
       for (var i = 0; i < griddef.length; i++) {
-        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-          'node node-weight';
+        // setTimeout(()=>{
+          document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-wall';
+        // },1000);
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
         setGrid(newGrid);
       }
     }
-    // else if (mazeAlgorithm == "Recursive Division") {
-    //   let list1=[];
-    //   var orientation="horizontal";
-    //   let count=0
-    //   var griddef= horizontaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode,list1,orientation,count);
-    //   for(var i=0;i<griddef.length;i++)
-    //   {
-    //     document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-    //       'node node-weight';
-    //     const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
-    //     setGrid(newGrid);
-    //   }
-    // }
   }
 
   const compareVisualization = () => {

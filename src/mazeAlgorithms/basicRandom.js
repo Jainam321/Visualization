@@ -35,7 +35,7 @@ function basicRandom(grid, startNode, finishNode) {
                var count=0;
                for(var k=0;k<grid1.length;k++)
                {
-                    if(grid[k]==grid[col][row])
+                    if(grid1[k]==grid[col][row])
                     {
                          count=1;
                     }
