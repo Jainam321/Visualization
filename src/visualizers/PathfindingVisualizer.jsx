@@ -328,11 +328,19 @@ const PathfindingVisualizer = () => {
       }
     }
     else if (mazeAlgorithm == "Recursive Division") {
-      var griddef = recursive(grid, 0, grid.length - 1, 0, grid.length - 1, startNode, finishNode);
-      for (var i = 0; i < griddef.length; i++) {
-        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
-          'node node-weight';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+      var griddef = recursive(grid, startNode, finishNode);
+      for(let i=0; i<20 ; i++){
+        for(let j=0; j<50; j++){
+          if(i==0 || i == 19 || j==0 || j== 49){
+            document.getElementById(`node-${i}-${j}`).className = 'node node-wall';
+            const newGrid = getNewGridWithWallToggled(grid, i, j,isAddWeight, isStartNode, isEndNode);
+            setGrid(newGrid);
+          }
+        }
+      }
+      for(let i=0 ; i < griddef.length ; i++){
+        document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className = 'node node-wall';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0]+2, griddef[i][1]+2,isAddWeight, isStartNode, isEndNode);
         setGrid(newGrid);
       }
     }
