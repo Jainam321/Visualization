@@ -12,6 +12,8 @@ import basicRandom from '../mazeAlgorithms/basicRandom.js';
 import basicWeighted from '../mazeAlgorithms/basicWeighted.js';
 import Simplestair from '../mazeAlgorithms/Simplestair.js';
 import recursive from '../mazeAlgorithms/recursive.js';
+import verticaldiv from '../mazeAlgorithms/verticaldiv.js';
+import horizontaldiv from '../mazeAlgorithms/horizontaldiv.js';
 import Snake from '../mazeAlgorithms/Snakemaze';
 import Cards from '../components/Card';
 
@@ -309,7 +311,7 @@ const PathfindingVisualizer = () => {
     }
     else if (mazeAlgorithm == "Snake Maze") {
       // recursive(grid,0,grid.length-1,0,grid.length-1,startNode,finishNode);
-      Snake(grid, startNode, finishNode);
+      // Snake(grid, startNode, finishNode);
       var griddef = Snake(grid, startNode, finishNode);
       for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
@@ -339,11 +341,45 @@ const PathfindingVisualizer = () => {
         }
       }
       for(let i=0 ; i < griddef.length ; i++){
-        document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className = 'node node-wall';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0]+2, griddef[i][1]+2,isAddWeight, isStartNode, isEndNode);
+        if(document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className != 'node node-wall'){
+          document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className = 'node node-wall';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i][0]+2, griddef[i][1]+2,isAddWeight, isStartNode, isEndNode);
+          setGrid(newGrid);
+        }
+      }
+      }else if (mazeAlgorithm == "Vertical Division") {
+      var griddef= verticaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode);
+      for(var i=0;i<griddef.length;i++)
+      {
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-weight';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
         setGrid(newGrid);
       }
     }
+    else if (mazeAlgorithm == "Horizontal Division") {
+      var griddef= horizontaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode);
+      for(var i=0;i<griddef.length;i++)
+      {
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+          'node node-weight';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+        setGrid(newGrid);
+      }
+    }
+    // else if (mazeAlgorithm == "Recursive Division") {
+    //   let list1=[];
+    //   var orientation="horizontal";
+    //   let count=0
+    //   var griddef= horizontaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode,list1,orientation,count);
+    //   for(var i=0;i<griddef.length;i++)
+    //   {
+    //     document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+    //       'node node-weight';
+    //     const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
+    //     setGrid(newGrid);
+    //   }
+    // }
   }
 
   const compareVisualization = () => {
@@ -434,6 +470,12 @@ const PathfindingVisualizer = () => {
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Snake Maze");
               }}>Snake Maze</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={() => {
+                setmazeAlgorithm("Vertical Division");
+              }}>Vertical Division</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={() => {
+                setmazeAlgorithm("Horizontal Division");
+              }}>Horizontal Division</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Recursive Division");
               }}>Recursive Division</NavDropdown.Item>
