@@ -15,6 +15,8 @@ import recursive from '../mazeAlgorithms/recursive.js';
 import verticaldiv from '../mazeAlgorithms/verticaldiv.js';
 import horizontaldiv from '../mazeAlgorithms/horizontaldiv.js';
 import Snake from '../mazeAlgorithms/Snakemaze';
+import chanceMazeH from '../mazeAlgorithms/chanceMazeH';
+import chanceMazeV from '../mazeAlgorithms/chanceMazeV';
 import Cards from '../components/Card';
 
 var START_NODE_ROW = 10;
@@ -348,19 +350,36 @@ const PathfindingVisualizer = () => {
         }
       }
       }else if (mazeAlgorithm == "Vertical Division") {
-      var griddef= verticaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode);
+        var griddef= verticaldiv(grid,startNode,finishNode);
+        for(var i=0;i<griddef.length;i++)
+        {
+          document.getElementById(`node-${griddef[i][0]}-${griddef[i][1]}`).className = 'node node-wall';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1],isAddWeight, isStartNode, isEndNode);
+          setGrid(newGrid);
+        }
+    }
+    else if (mazeAlgorithm == "Horizontal Division") {
+      var griddef= horizontaldiv(grid,startNode,finishNode);
       for(var i=0;i<griddef.length;i++)
       {
+        document.getElementById(`node-${griddef[i][0]}-${griddef[i][1]}`).className = 'node node-wall';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1],isAddWeight, isStartNode, isEndNode);
+        setGrid(newGrid);
+      }
+    }
+
+    else if (mazeAlgorithm == "Chance Maze Horizontal") {
+      var griddef =chanceMazeH(grid, 0, grid.length-1, 0 , grid[0].length-1, startNode, finishNode);
+      for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-weight';
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
         setGrid(newGrid);
       }
     }
-    else if (mazeAlgorithm == "Horizontal Division") {
-      var griddef= horizontaldiv(grid,0,grid.length-2,0,grid[0].length-2,startNode,finishNode);
-      for(var i=0;i<griddef.length;i++)
-      {
+    else if (mazeAlgorithm == "Chance Maze Vertical") {
+      var griddef =chanceMazeV(grid, 0, grid.length-1, 0 , grid[0].length-1, startNode, finishNode);
+      for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-weight';
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
@@ -479,6 +498,12 @@ const PathfindingVisualizer = () => {
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Recursive Division");
               }}>Recursive Division</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={() => {
+                setmazeAlgorithm("Chance Maze Horizontal");
+              }}>Chance Maze Horizontal</NavDropdown.Item>
+              <NavDropdown.Item href="" onClick={() => {
+                setmazeAlgorithm("Chance Maze Vertical");
+              }}>Chance Maze Vertical</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <div>
