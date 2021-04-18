@@ -18,6 +18,7 @@ import Snake from '../mazeAlgorithms/Snakemaze';
 import chanceMazeH from '../mazeAlgorithms/chanceMazeH';
 import chanceMazeV from '../mazeAlgorithms/chanceMazeV';
 import Cards from '../components/Card';
+import ReactDOM from 'react-dom';
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 10;
@@ -420,7 +421,10 @@ const PathfindingVisualizer = () => {
     const newGrid = grid;
     for (const row of newGrid) {
       for (const node of row) {
-        document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
+        let nodeClassName = document.getElementById(`node-${node.row}-${node.col}`,).className;
+        if (nodeClassName !== 'node node-wall') {
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'node';
+        }
       }
     }
     for (let i = 0; i <= compValues[index][7].length; i++) {
@@ -445,6 +449,41 @@ const PathfindingVisualizer = () => {
         document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
     }
   }
+
+  const compareAll = () => {
+    const getRandomColor = () => {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    const showOnlyOneAlgoFinalPath = (index, color) => {
+      for (let i = 0; i < compValues[index][8].length; i++) {
+        const node = compValues[index][8][i];
+        document.getElementById(`node-${node.row}-${node.col}`).style = `background-color: ${color};`;
+        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+      }
+    }
+
+    let listOfColors = [];
+    for(let index=0; index < compValues.length; index++){
+      const colorOfShortestPath = getRandomColor();
+      listOfColors.push(colorOfShortestPath);
+      showOnlyOneAlgoFinalPath(index, colorOfShortestPath);
+    }
+    const parentElement = document.getElementById('indication');
+    let l = [];
+    for(let i = 0; i < listOfColors.length; i++){
+      const x = <div onClick={() => showOnlyOneAlgoFinalPath(i, listOfColors[i])} style={{ width: '25px', height: '25px', backgroundColor: `${listOfColors[i]}`, padding: '3px'}}>{i+1}</div>;
+      l.push(x);
+    }
+    ReactDOM.render(l,parentElement);
+  }
+
 
   const addWeights = () => {
     setIsAddWeight(!isAddWeight);
@@ -496,7 +535,6 @@ const PathfindingVisualizer = () => {
             </NavDropdown>
           </Nav>
           <div>
-
             <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide
               style={{
                 position: 'absolute',
@@ -557,29 +595,38 @@ const PathfindingVisualizer = () => {
       <span className="pText">Total Cost</span>
       <span className="timeBox">{totalcost}</span>
       <span className="pBtn" style={{ marginLeft: '10px' }}>
-              {showComp ?
-                <Button variant="info" size="sm" onClick={() => compareVisualization()}>Add to Compare</Button>
-                : <span></span>
-              }
-            </span>
-            <span className="pBtn">
-              {showComp ?
-                <Button variant="danger" size="sm" onClick={() => setCompValues([])}>Clear Comparison</Button>
-                : <span></span>
-              }
-            </span>
+        {showComp ?
+          <Button variant="info" size="sm" onClick={() => compareVisualization()}>Add to Compare</Button>
+          : <span></span>
+        }
+      </span>
+      <span className="pBtn">
+        {showComp ?
+          <Button variant="danger" size="sm" onClick={() => setCompValues([])}>Clear Comparison</Button>
+          : <span></span>
+        }
+      </span>
+      <span className="pBtn">
+        {showComp ?
+          <Button variant="success" size="sm" onClick={() => compareAll()}>Compare All</Button>
+          : <span></span>
+        }
+      </span>
       <div className="Flexbox1">
 
-        {compValues.length != 0 ? (compValues.map((vis, index) => <div onClick={() => showFinalStateOfAlgo(index)}>
+        {compValues.length != 0 ? (compValues.map((vis, index) => <div>
+          <div onClick={() => showFinalStateOfAlgo(index)}>
           <Cards key={index} algo={vis[1]} tc={vis[2]} cells={vis[3]} time1={vis[4]} maze1={vis[5]} total1={vis[6]} >  
           </Cards>
+          </div>
           <Button variant="outline-danger" onClick={() => deleteComparison(index)}>
             Remove
           </Button>
         </div>)) : console.log('else')}
 
       </div>
-
+      <div className="Flexbox1" style={{margin: 'auto', width: '50%'}} id="indication"></div>
+      
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (
