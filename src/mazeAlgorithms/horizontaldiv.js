@@ -54,5 +54,5 @@ function addWall(num, vertical, startNode, finishNode) {
     walls.push(wall);
   }
 }
-  
+
 export default horizontaldiv;

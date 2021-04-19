@@ -46,7 +46,7 @@ function Snake(grid, startNode, finishNode) {
                 continue;
             }
             else {
-                grid1.push(grid[i][j - i -1]);
+                grid1.push(grid[i][j - i - 1]);
             }
         }
     }
