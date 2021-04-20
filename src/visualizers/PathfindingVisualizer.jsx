@@ -511,12 +511,12 @@ const PathfindingVisualizer = () => {
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Basic Weight Maze");
               }}>Basic Weight Maze</NavDropdown.Item>
-              <NavDropdown.Item href="" onClick={() => {
+              {/* <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Simple Stair Pattern");
               }}>Simple Stair Pattern</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Snake Maze");
-              }}>Snake Maze</NavDropdown.Item>
+              }}>Snake Maze</NavDropdown.Item> */}
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Vertical Division");
               }}>Vertical Division</NavDropdown.Item>
@@ -526,12 +526,12 @@ const PathfindingVisualizer = () => {
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Recursive Division");
               }}>Recursive Division</NavDropdown.Item>
-              <NavDropdown.Item href="" onClick={() => {
+              {/* <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Chance Maze Horizontal");
               }}>Chance Maze Horizontal</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={() => {
                 setmazeAlgorithm("Chance Maze Vertical");
-              }}>Chance Maze Vertical</NavDropdown.Item>
+              }}>Chance Maze Vertical</NavDropdown.Item> */}
             </NavDropdown>
           </Nav>
           <div>
