@@ -14,7 +14,7 @@ function Simplestair(grid, startNode, finishNode) {
   };
   x = grid.length - 1;
   y = 0;
-  while (x >= 0 && y < grid.length-1) {
+  while (x >= 0 && y < grid.length - 1) {
     if (grid[y][x] == startNode || grid[y][x] == finishNode) {
       continue;
     }

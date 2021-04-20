@@ -18,6 +18,7 @@ import Snake from '../mazeAlgorithms/Snakemaze';
 import chanceMazeH from '../mazeAlgorithms/chanceMazeH';
 import chanceMazeV from '../mazeAlgorithms/chanceMazeV';
 import Cards from '../components/Card';
+// import logo1 from '../images/Logo.png';
 import ReactDOM from 'react-dom';
 
 var START_NODE_ROW = 10;
@@ -308,7 +309,7 @@ const PathfindingVisualizer = () => {
       for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-weight';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col,isAddWeight);
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col, isAddWeight);
         setGrid(newGrid);
       }
     }
@@ -334,43 +335,41 @@ const PathfindingVisualizer = () => {
     }
     else if (mazeAlgorithm == "Recursive Division") {
       var griddef = recursive(grid, startNode, finishNode);
-      for(let i=0; i<20 ; i++){
-        for(let j=0; j<50; j++){
-          if(i==0 || i == 19 || j==0 || j== 49){
+      for (let i = 0; i < 20; i++) {
+        for (let j = 0; j < 50; j++) {
+          if (i == 0 || i == 19 || j == 0 || j == 49) {
             document.getElementById(`node-${i}-${j}`).className = 'node node-wall';
-            const newGrid = getNewGridWithWallToggled(grid, i, j,isAddWeight, isStartNode, isEndNode);
+            const newGrid = getNewGridWithWallToggled(grid, i, j, isAddWeight, isStartNode, isEndNode);
             setGrid(newGrid);
           }
         }
       }
-      for(let i=0 ; i < griddef.length ; i++){
-        if(document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className != 'node node-wall'){
-          document.getElementById(`node-${griddef[i][0]+2}-${griddef[i][1]+2}`).className = 'node node-wall';
-          const newGrid = getNewGridWithWallToggled(grid, griddef[i][0]+2, griddef[i][1]+2,isAddWeight, isStartNode, isEndNode);
+      for (let i = 0; i < griddef.length; i++) {
+        if (document.getElementById(`node-${griddef[i][0] + 2}-${griddef[i][1] + 2}`).className != 'node node-wall') {
+          document.getElementById(`node-${griddef[i][0] + 2}-${griddef[i][1] + 2}`).className = 'node node-wall';
+          const newGrid = getNewGridWithWallToggled(grid, griddef[i][0] + 2, griddef[i][1] + 2, isAddWeight, isStartNode, isEndNode);
           setGrid(newGrid);
         }
       }
-      }else if (mazeAlgorithm == "Vertical Division") {
-        var griddef= verticaldiv(grid,startNode,finishNode);
-        for(var i=0;i<griddef.length;i++)
-        {
-          document.getElementById(`node-${griddef[i][0]}-${griddef[i][1]}`).className = 'node node-wall';
-          const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1],isAddWeight, isStartNode, isEndNode);
-          setGrid(newGrid);
-        }
+    } else if (mazeAlgorithm == "Vertical Division") {
+      var griddef = verticaldiv(grid, startNode, finishNode);
+      for (var i = 0; i < griddef.length; i++) {
+        document.getElementById(`node-${griddef[i][0]}-${griddef[i][1]}`).className = 'node node-wall';
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1], isAddWeight, isStartNode, isEndNode);
+        setGrid(newGrid);
+      }
     }
     else if (mazeAlgorithm == "Horizontal Division") {
-      var griddef= horizontaldiv(grid,startNode,finishNode);
-      for(var i=0;i<griddef.length;i++)
-      {
+      var griddef = horizontaldiv(grid, startNode, finishNode);
+      for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i][0]}-${griddef[i][1]}`).className = 'node node-wall';
-        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1],isAddWeight, isStartNode, isEndNode);
+        const newGrid = getNewGridWithWallToggled(grid, griddef[i][0], griddef[i][1], isAddWeight, isStartNode, isEndNode);
         setGrid(newGrid);
       }
     }
 
     else if (mazeAlgorithm == "Chance Maze Horizontal") {
-      var griddef =chanceMazeH(grid, 0, grid.length-1, 0 , grid[0].length-1, startNode, finishNode);
+      var griddef = chanceMazeH(grid, 0, grid.length - 1, 0, grid[0].length - 1, startNode, finishNode);
       for (var i = 0; i < griddef.length; i++) {
         document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-weight';
@@ -379,10 +378,10 @@ const PathfindingVisualizer = () => {
       }
     }
     else if (mazeAlgorithm == "Chance Maze Vertical") {
-      var griddef =chanceMazeV(grid, 0, grid.length-1, 0 , grid[0].length-1, startNode, finishNode);
+      var griddef = chanceMazeV(grid, 0, grid.length - 1, 0, grid[0].length - 1, startNode, finishNode);
       for (var i = 0; i < griddef.length; i++) {
         // setTimeout(()=>{
-          document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
+        document.getElementById(`node-${griddef[i].row}-${griddef[i].col}`).className =
           'node node-wall';
         // },1000);
         const newGrid = getNewGridWithWallToggled(grid, griddef[i].row, griddef[i].col);
@@ -431,22 +430,22 @@ const PathfindingVisualizer = () => {
       if (i === compValues[index][7].length) {
         for (let i = 0; i < compValues[index][8].length; i++) {
           const node = compValues[index][8][i];
-            if (node.weight === NODE_WEIGHT) {
-              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
-            }
-            else {
-              document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
-            }
-            document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-            document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+          if (node.weight === NODE_WEIGHT) {
+            document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-weight-in-path';
+          }
+          else {
+            document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-shortest-path';
+          }
+          document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+          document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
         }
         return;
       }
       const node = compValues[index][7][i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          'node node-visited';
-        document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
-        document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
+      document.getElementById(`node-${node.row}-${node.col}`).className =
+        'node node-visited';
+      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node node-start';
+      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node node-finish';
     }
   }
 
@@ -470,18 +469,18 @@ const PathfindingVisualizer = () => {
     }
 
     let listOfColors = [];
-    for(let index=0; index < compValues.length; index++){
+    for (let index = 0; index < compValues.length; index++) {
       const colorOfShortestPath = getRandomColor();
       listOfColors.push(colorOfShortestPath);
       showOnlyOneAlgoFinalPath(index, colorOfShortestPath);
     }
     const parentElement = document.getElementById('indication');
     let l = [];
-    for(let i = 0; i < listOfColors.length; i++){
-      const x = <div onClick={() => showOnlyOneAlgoFinalPath(i, listOfColors[i])} style={{ width: '25px', height: '25px', backgroundColor: `${listOfColors[i]}`, padding: '3px'}}>{i+1}</div>;
+    for (let i = 0; i < listOfColors.length; i++) {
+      const x = <div onClick={() => showOnlyOneAlgoFinalPath(i, listOfColors[i])} style={{ width: '25px', height: '25px', backgroundColor: `${listOfColors[i]}`, padding: '3px' }}>{i + 1}</div>;
       l.push(x);
     }
-    ReactDOM.render(l,parentElement);
+    ReactDOM.render(l, parentElement);
   }
 
 
@@ -496,7 +495,8 @@ const PathfindingVisualizer = () => {
     <>
       <Navbar bg="light" variant="light">
         <div className="container">
-          <Navbar.Brand href="#home">Path Visualization</Navbar.Brand>
+          <Navbar.Brand href="#home" style={{ color: '#00BACF' }}>AlgoComp</Navbar.Brand>
+          {/* <Navbar.Brand href="#home"><img src={logo1} alt="Logo" height="90" width="90"/></Navbar.Brand> */}
           <Nav className="mr-auto">
             <NavDropdown title={algorithm} id="basic-nav-dropdown">
               <NavDropdown.Item href="" onClick={() => setAlgorithm("Dijkstra")}>Dijkstra</NavDropdown.Item>
@@ -616,8 +616,8 @@ const PathfindingVisualizer = () => {
 
         {compValues.length != 0 ? (compValues.map((vis, index) => <div>
           <div onClick={() => showFinalStateOfAlgo(index)}>
-          <Cards key={index} algo={vis[1]} tc={vis[2]} cells={vis[3]} time1={vis[4]} maze1={vis[5]} total1={vis[6]} >  
-          </Cards>
+            <Cards key={index} algo={vis[1]} tc={vis[2]} cells={vis[3]} time1={vis[4]} maze1={vis[5]} total1={vis[6]} >
+            </Cards>
           </div>
           <Button variant="outline-danger" onClick={() => deleteComparison(index)}>
             Remove
@@ -625,8 +625,8 @@ const PathfindingVisualizer = () => {
         </div>)) : console.log('else')}
 
       </div>
-      <div className="Flexbox1" style={{margin: 'auto', width: '50%'}} id="indication"></div>
-      
+      <div className="Flexbox1" style={{ margin: 'auto', width: '50%' }} id="indication"></div>
+
       <div className="grid">
         {grid.map((row, rowIdx) => {
           return (

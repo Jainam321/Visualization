@@ -3,8 +3,8 @@ export default function recursive(grid, startNode, finishNode) {
   if (!startNode || !finishNode || startNode === finishNode) {
     return false;
   }
-  let vertical = range(grid[0].length-2);
-  let horizontal = range(grid.length-2);
+  let vertical = range(grid[0].length - 2);
+  let horizontal = range(grid.length - 2);
   walls = [];
   getRecursiveWalls(vertical, horizontal, grid, startNode, finishNode);
   return walls;
@@ -90,8 +90,8 @@ function addWall(dir, num, vertical, horizontal, startNode, finishNode) {
     if (horizontal.length === 2) return;
     for (let temp of horizontal) {
       if (
-        (temp === (startNode.row-2) && num === (startNode.col-2)) ||
-        (temp === (finishNode.row-2) && num === (finishNode.col-2))
+        (temp === (startNode.row - 2) && num === (startNode.col - 2)) ||
+        (temp === (finishNode.row - 2) && num === (finishNode.col - 2))
       ) {
         isStartFinish = true;
         continue;
@@ -102,8 +102,8 @@ function addWall(dir, num, vertical, horizontal, startNode, finishNode) {
     if (vertical.length === 2) return;
     for (let temp of vertical) {
       if (
-        (num === (startNode.row-2) && (temp === startNode.col-2)) ||
-        (num === (finishNode.row-2) && (temp === finishNode.col-2))
+        (num === (startNode.row - 2) && (temp === startNode.col - 2)) ||
+        (num === (finishNode.row - 2) && (temp === finishNode.col - 2))
       ) {
         isStartFinish = true;
         continue;
