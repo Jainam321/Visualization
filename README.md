@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<!-- <img src="./assets/images/flix.png" width=200px/> -->
+<img src="./public/a.png" width=200px/>
 
 <br>
 
