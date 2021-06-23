@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - React-Bootstrap
 
 # Building From Source
-To get started you need to install [flutter](https://flutter.dev/docs/get-started/install) and then you can download the repository.  
+To get started you need to install [React.Js](https://reactjs.org/docs/getting-started.html) and then you can download the repository.  
 ```bash
 git clone https://github.com/Jainam321/Visualization.git
 cd Visualization
