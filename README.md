@@ -25,6 +25,19 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+## Technology Stack
+
+- React
+- React-Bootstrap
+
+# Building From Source
+To get started you need to install [flutter](https://flutter.dev/docs/get-started/install) and then you can download the repository.  
+```bash
+git clone https://github.com/Jainam321/Visualization.git
+cd Visualization
+npm start
+```
+
 
 ## Learn More
 
